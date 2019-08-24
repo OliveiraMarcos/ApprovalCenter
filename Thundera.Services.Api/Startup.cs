@@ -80,7 +80,7 @@ namespace Thundera.Services.Api
                     Version = "v1",
                     Title = "Thundera Project",
                     Description = "Thundera API Swagger surface",
-                    Contact = new Contact { Name = "Eduardo Pires", Email = "marcos.ads.ti@gmail.com", Url = "https://github.com/OliveiraMarcos" },
+                    Contact = new Contact { Name = "Marcos Oliveira", Email = "marcos.ads.ti@gmail.com", Url = "https://github.com/OliveiraMarcos" },
                     License = new License { Name = "MIT", Url = "https://github.com/OliveiraMarcos/BaseFoundationProject/blob/master/LICENSE" }
                 });
             });
