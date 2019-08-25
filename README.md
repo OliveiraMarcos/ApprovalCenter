@@ -31,3 +31,9 @@ To know more about how to setup your enviroment visit the [Microsoft .NET Downlo
 - Event Sourcing
 - Unit of Work
 - Repository and Generic Repository
+
+## References
+
+- https://www.eduardopires.net.br/2016/12/apresentando-o-equinox-project/
+- https://medium.com/@renato.groffe/jwt-asp-net-core-2-2-exemplo-de-implementa%C3%A7%C3%A3o-3e10058c1a73
+- https://www.eduardopires.net.br/2014/10/tutorial-asp-net-mvc-5-ddd-ef-automapper-ioc-dicas-e-truques/
