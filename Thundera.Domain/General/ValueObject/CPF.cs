@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Thundera.Domain.Core.Models;
 
 namespace Thundera.Domain.General.ValueObject
@@ -93,7 +91,7 @@ namespace Thundera.Domain.General.ValueObject
 
         protected override int GetHashCodeCore()
         {
-            return (GetType().GetHashCode() * 907) + Code.GetHashCode();
+            return (GetType().GetHashCode() * 907) ^ Code.GetHashCode();
         }
     }
 }
