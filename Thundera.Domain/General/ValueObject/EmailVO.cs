@@ -3,19 +3,19 @@ using Thundera.Domain.Core.Models;
 
 namespace Thundera.Domain.General.ValueObject
 {
-    public class Email : ValueObject<Email>
+    public class EmailVO : ValueObject<EmailVO>
     {
-        public const int ValueEmailMax = 254;
+        public const int LengthMaxEmail = 254;
         public string Address { get; protected set; }
-        protected Email()
+        protected EmailVO()
         {
 
         }
-        public Email(string email)
+        public EmailVO(string email)
         {
             Address = email;
         }
-        protected override bool EqualsCore(Email other)
+        protected override bool EqualsCore(EmailVO other)
         {
             return Address.Equals(other.Address);
         }

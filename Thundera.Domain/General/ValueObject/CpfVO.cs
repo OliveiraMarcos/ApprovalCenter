@@ -4,15 +4,15 @@ using Thundera.Domain.Core.Models;
 
 namespace Thundera.Domain.General.ValueObject
 {
-    public class CPF : ValueObject<CPF>
+    public class CpfVO : ValueObject<CpfVO>
     {
-        public const int ValueMaxCpf = 11;
+        public const int LengthMaxCpf = 11;
         public string Code { get; protected set; }
-        protected CPF()
+        protected CpfVO()
         {
 
         }
-        public CPF(string cpf)
+        public CpfVO(string cpf)
         {
             Code = cpf;
         }
@@ -32,7 +32,7 @@ namespace Thundera.Domain.General.ValueObject
             var cpf = Code;
             if (string.IsNullOrEmpty(cpf))
                 return "";
-            while (cpf.Length < ValueMaxCpf)
+            while (cpf.Length < LengthMaxCpf)
                 cpf = "0" + cpf;
             return cpf;
         }
@@ -40,14 +40,14 @@ namespace Thundera.Domain.General.ValueObject
         public static bool IsValid(string cpf)
         {
             cpf = String.Join("", cpf.Where(Char.IsDigit));
-            if (cpf.Length < ValueMaxCpf)
+            if (cpf.Length < LengthMaxCpf)
                 return false;
 
-            while (cpf.Length < ValueMaxCpf)
+            while (cpf.Length < LengthMaxCpf)
                 cpf = "0" + cpf;
 
             var equal = true;
-            for (int i = 1; i < ValueMaxCpf && equal; i++)
+            for (int i = 1; i < LengthMaxCpf && equal; i++)
                 if (cpf[i] != cpf[0])
                     equal = false;
             if (equal || cpf == "12345678909")
@@ -63,10 +63,10 @@ namespace Thundera.Domain.General.ValueObject
 
             if (result < 2)
             {
-                if (!"0".Equals(cpf[ValueMaxCpf - 2].ToString()))
+                if (!"0".Equals(cpf[LengthMaxCpf - 2].ToString()))
                     return false;
             }
-            else if ((11 - result).ToString() != cpf[ValueMaxCpf - 2].ToString())
+            else if ((11 - result).ToString() != cpf[LengthMaxCpf - 2].ToString())
                 return false;
 
             sum = 0;
@@ -76,15 +76,15 @@ namespace Thundera.Domain.General.ValueObject
             result = sum % 11;
             if (result < 2)
             {
-                if (!"0".Equals(cpf[ValueMaxCpf - 1].ToString()))
+                if (!"0".Equals(cpf[LengthMaxCpf - 1].ToString()))
                     return false;
             }
-            else if ((11 - result).ToString() != cpf[ValueMaxCpf - 1].ToString())
+            else if ((11 - result).ToString() != cpf[LengthMaxCpf - 1].ToString())
                 return false;
             return true;
         }
 
-        protected override bool EqualsCore(CPF other)
+        protected override bool EqualsCore(CpfVO other)
         {
             return Code.Equals(other.Code);
         }

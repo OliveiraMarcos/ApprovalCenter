@@ -5,18 +5,18 @@ using Thundera.Domain.Core.Models;
 
 namespace Thundera.Domain.General.ValueObject
 {
-    public class Phone : ValueObject<Phone>
+    public class PhoneVO : ValueObject<PhoneVO>
     {
-        public string DDD { get; protected set; }
-        public string Number { get; protected set; }
+        public string DDD {get; protected set; }
+        public string Number {get; protected set; }
 
-        public const int ValueMaxDDD = 3;
-        public const int ValueMaxNumber = 20;
-        protected Phone()
+        public const int LengthMaxDDD = 3;
+        public const int LengthMaxNumber = 20;
+        protected PhoneVO()
         {
 
         }
-        public Phone(string ddd, string number)
+        public PhoneVO(string ddd, string number)
         {
             DDD = ddd;
             Number = number;
@@ -34,7 +34,7 @@ namespace Thundera.Domain.General.ValueObject
             return $"({DDD}) {Regex.Replace(Number, @"(\d+)(\d{4})", "$1-$2")}";
         }
 
-        protected override bool EqualsCore(Phone other)
+        protected override bool EqualsCore(PhoneVO other)
         {
             return DDD.Equals(other.DDD) && Number.Equals(other.Number);
         }

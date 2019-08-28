@@ -10,6 +10,7 @@
     <Folder Include="General\EventHandlers\" />
     <Folder Include="General\Commands\" />
     <Folder Include="General\Validations\" />
+    <Folder Include="General\ValueObject\" />
   </ItemGroup>
 
   <ItemGroup>

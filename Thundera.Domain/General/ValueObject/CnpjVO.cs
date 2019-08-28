@@ -4,18 +4,18 @@ using Thundera.Domain.Core.Models;
 
 namespace Thundera.Domain.General.ValueObject
 {
-    public class CNPJ : ValueObject<CNPJ>
+    public class CnpjVO : ValueObject<CnpjVO>
     {
-        public const int ValueMaxCnpj = 14;
+        public const int LengthMaxCnpj = 14;
         public string Code { get; protected set; }
-        protected CNPJ()
+        protected CnpjVO()
         {
         }
-        public CNPJ(string cnpj)
+        public CnpjVO(string cnpj)
         {
             Code = cnpj;
         }
-        protected override bool EqualsCore(CNPJ other)
+        protected override bool EqualsCore(CnpjVO other)
         {
             return Code.Equals(other.Code);
         }
@@ -30,7 +30,7 @@ namespace Thundera.Domain.General.ValueObject
             var cnpj = Code;
             if (string.IsNullOrEmpty(cnpj))
                 return "";
-            while (cnpj.Length < ValueMaxCnpj)
+            while (cnpj.Length < LengthMaxCnpj)
                 cnpj = "0" + cnpj;
             return cnpj;
         }
@@ -48,10 +48,10 @@ namespace Thundera.Domain.General.ValueObject
         public static bool IsValid(string cnpj)
         {
             cnpj = String.Join("", cnpj.Where(Char.IsDigit));
-            if (cnpj.Length < ValueMaxCnpj)
+            if (cnpj.Length < LengthMaxCnpj)
                 return false;
 
-            while (cnpj.Length < ValueMaxCnpj)
+            while (cnpj.Length < LengthMaxCnpj)
                 cnpj = "0" + cnpj;
 
             var baseNumbers = new int[13] { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
@@ -64,10 +64,10 @@ namespace Thundera.Domain.General.ValueObject
 
             if (result < 2)
             {
-                if (!"0".Equals(cnpj[ValueMaxCnpj - 2].ToString()))
+                if (!"0".Equals(cnpj[LengthMaxCnpj - 2].ToString()))
                     return false;
             }
-            else if ((11 - result).ToString() != cnpj[ValueMaxCnpj - 2].ToString())
+            else if ((11 - result).ToString() != cnpj[LengthMaxCnpj - 2].ToString())
                 return false;
 
             sum = 0;
@@ -77,10 +77,10 @@ namespace Thundera.Domain.General.ValueObject
             result = sum % 11;
             if (result < 2)
             {
-                if (!"0".Equals(cnpj[ValueMaxCnpj - 1].ToString()))
+                if (!"0".Equals(cnpj[LengthMaxCnpj - 1].ToString()))
                     return false;
             }
-            else if ((11 - result).ToString() != cnpj[ValueMaxCnpj - 1].ToString())
+            else if ((11 - result).ToString() != cnpj[LengthMaxCnpj - 1].ToString())
                 return false;
             return true;
         }

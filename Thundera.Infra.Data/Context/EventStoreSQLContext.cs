@@ -18,7 +18,7 @@ namespace Thundera.Infra.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new StoredEventContextConf());
+            modelBuilder.ApplyConfiguration(new StoredEventContextConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

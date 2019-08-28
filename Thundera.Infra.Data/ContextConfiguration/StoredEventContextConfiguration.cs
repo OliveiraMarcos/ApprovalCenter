@@ -4,7 +4,7 @@ using Thundera.Domain.Core.Events;
 
 namespace Thundera.Infra.Data.ContextConfiguration
 {
-    public class StoredEventContextConf : IEntityTypeConfiguration<StoredEvent>
+    public class StoredEventContextConfiguration : IEntityTypeConfiguration<StoredEvent>
     {
         public void Configure(EntityTypeBuilder<StoredEvent> builder)
         {
