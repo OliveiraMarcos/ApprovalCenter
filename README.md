@@ -1,6 +1,8 @@
 # BaseFoundationProject
 Base foundation project to developed of others applications with DDD, CQRS and Event Sourcing
 
+[![Lisence](https://img.shields.io/github/license/OliveiraMarcos/BaseFoundationProject)](LICENSE)
+
 ## How to use:
 - You will need the latest Visual Studio 2017 and the latest .NET Core SDK.
 - The latest SDK and tools can be downloaded from https://dot.net/core.
