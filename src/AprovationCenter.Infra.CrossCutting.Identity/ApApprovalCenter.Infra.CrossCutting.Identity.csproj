@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AprovationCenter.Domain\AprovationCenter.Domain.csproj" />
+    <ProjectReference Include="..\AprovationCenter.Domain\ApprovalCenter.Domain.csproj" />
   </ItemGroup>
 
 </Project>

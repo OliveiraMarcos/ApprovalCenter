@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AprovationCenter.Infra.CrossCutting.IoC\AprovationCenter.Infra.CrossCutting.IoC.csproj" />
+    <ProjectReference Include="..\AprovationCenter.Infra.CrossCutting.IoC\ApprovalCenter.Infra.CrossCutting.IoC.csproj" />
   </ItemGroup>
 
 </Project>

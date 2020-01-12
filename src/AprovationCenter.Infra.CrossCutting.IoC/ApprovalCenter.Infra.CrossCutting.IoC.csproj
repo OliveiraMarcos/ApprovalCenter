@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AprovationCenter.Infra.Data\AprovationCenter.Infra.Data.csproj" />
+    <ProjectReference Include="..\AprovationCenter.Infra.Data\ApprovalCenter.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>
