@@ -29,9 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApprovalCenter.Infra.Data",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApprovalCenter.Infra.CrossCutting.IoC", "src\ApprovalCenter.Infra.CrossCutting.IoC\ApprovalCenter.Infra.CrossCutting.IoC.csproj", "{81A0685B-4BBD-4C68-BF9C-2168DA1CE9AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApApprovalCenter.Infra.CrossCutting.Identity", "src\ApprovalCenter.Infra.CrossCutting.Identity\ApApprovalCenter.Infra.CrossCutting.Identity.csproj", "{0AC5D441-94F6-4875-829B-84729E097326}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApprovalCenter.Infra.CrossCutting.Identity", "src\ApprovalCenter.Infra.CrossCutting.Identity\ApprovalCenter.Infra.CrossCutting.Identity.csproj", "{0AC5D441-94F6-4875-829B-84729E097326}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AApprovalCenter.Infra.CrossCutting.Bus", "src\ApprovalCenter.Infra.CrossCutting.Bus\AApprovalCenter.Infra.CrossCutting.Bus.csproj", "{EFC6C233-73D7-4E72-BDF3-494597B57CC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApprovalCenter.Infra.CrossCutting.Bus", "src\ApprovalCenter.Infra.CrossCutting.Bus\ApprovalCenter.Infra.CrossCutting.Bus.csproj", "{EFC6C233-73D7-4E72-BDF3-494597B57CC7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApprovalCenter.Services.Api", "src\ApprovalCenter.Services.Api\ApprovalCenter.Services.Api.csproj", "{FAAFCB54-F0DC-4A61-8B77-2F0FEF5362B5}"
 EndProject

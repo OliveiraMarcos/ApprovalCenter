@@ -5,12 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Approval\Events\" />
     <Folder Include="General\Models\" />
     <Folder Include="General\Events\" />
     <Folder Include="General\EventHandlers\" />
     <Folder Include="General\Commands\" />
     <Folder Include="General\Validations\" />
     <Folder Include="General\ValueObject\" />
+    <Folder Include="User\" />
   </ItemGroup>
 
   <ItemGroup>

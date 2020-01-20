@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ApprovalCenter.Infra.CrossCutting.Bus\AApprovalCenter.Infra.CrossCutting.Bus.csproj" />
+    <ProjectReference Include="..\ApprovalCenter.Infra.CrossCutting.Bus\ApprovalCenter.Infra.CrossCutting.Bus.csproj" />
   </ItemGroup>
 
 </Project>

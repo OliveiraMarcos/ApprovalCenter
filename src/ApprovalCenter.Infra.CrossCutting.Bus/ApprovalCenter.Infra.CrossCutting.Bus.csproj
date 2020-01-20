@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ApprovalCenter.Infra.CrossCutting.Identity\ApApprovalCenter.Infra.CrossCutting.Identity.csproj" />
+    <ProjectReference Include="..\ApprovalCenter.Infra.CrossCutting.Identity\ApprovalCenter.Infra.CrossCutting.Identity.csproj" />
   </ItemGroup>
 
 </Project>

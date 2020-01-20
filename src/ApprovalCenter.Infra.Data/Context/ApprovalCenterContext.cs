@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ApprovalCenter.Domain.Approval.Entities;
+using ApprovalCenter.Infra.Data.ContextConfiguration;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
@@ -6,6 +8,8 @@ namespace ApprovalCenter.Infra.Data.Context
 {
     public class ApprovalCenterContext : DbContext
     {
+        public DbSet<ApprovalEntity> Approval { get; set; }
+        public DbSet<CategoryEntity> Category { get; set; }
         private readonly IHostingEnvironment _env;
 
         public ApprovalCenterContext(IHostingEnvironment env)
@@ -15,6 +19,8 @@ namespace ApprovalCenter.Infra.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new ApprovalContextConfiguration()); 
+            modelBuilder.ApplyConfiguration(new CategoryContextConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
