@@ -1,8 +1,6 @@
 ﻿using ApprovalCenter.Domain.Approval.Commands;
 using FluentValidation;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ApprovalCenter.Domain.Approval.Validations
 {

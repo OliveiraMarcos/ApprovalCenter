@@ -1,21 +1,62 @@
-﻿using ApprovalCenter.Domain.Core.Models;
+﻿using ApprovalCenter.Domain.Category.Entities;
+using ApprovalCenter.Domain.Core.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ApprovalCenter.Domain.Approval.Entities
 {
     public class ApprovalEntity : Entity
     {
-        public string Subject { get; set; }
-        public string Description { get; set; }
-        public bool? IsApproval { get; set; }
-        public string Justification { get; set; }
-        public CategoryEntity Category { get; set; }
-        public Guid CategoryId { get; set; }
-        public string EmailApproval { get; set; }
-        public DateTime DateCreate { get; set; }
-        public DateTime? DateApproval { get; set; }
-        public DateTime? DateRead { get; set; }
+        protected ApprovalEntity()
+        {
+
+        }
+
+        public ApprovalEntity(Guid id
+                            , Guid categoryId
+                            , string subject
+                            , string description
+                            , string emailApproval
+                            , DateTime dateCreate)
+        {
+            this.Id = id;
+            this.Subject = subject;
+            this.Description = description;
+            this.CategoryId = categoryId;
+            this.EmailApproval = emailApproval;
+            this.DateCreate = dateCreate;
+        }
+
+        public ApprovalEntity SetJustification(string justification)
+        {
+            this.Justification = justification;
+            return this;
+        }
+        public ApprovalEntity SetDateApproval(DateTime? dateApproval)
+        {
+            this.DateApproval = dateApproval;
+            return this;
+        }
+        public ApprovalEntity SetDateRead(DateTime? dateRead)
+        {
+            this.DateRead = dateRead;
+            return this;
+        }
+        public ApprovalEntity SetIsApproval(bool? isApproval)
+        {
+            this.IsApproval = isApproval;
+            return this;
+        }
+        public string Subject { get; protected set; }
+        public string Description { get; protected set; }
+        public bool? IsApproval { get; protected set; }
+        public string Justification { get; protected set; }
+        public CategoryEntity Category { get; protected set; }
+        public Guid CategoryId { get; protected set; }
+        public string EmailApproval { get; protected set; }
+        public DateTime DateCreate { get; protected set; }
+        public DateTime? DateApproval { get; protected set; }
+        public DateTime? DateRead { get; protected set; }
+
+        }
     }
 }

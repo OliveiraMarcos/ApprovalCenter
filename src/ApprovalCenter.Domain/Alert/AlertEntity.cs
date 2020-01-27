@@ -1,8 +1,5 @@
-﻿using ApprovalCenter.Domain.Approval.Entities;
-using ApprovalCenter.Domain.Core.Models;
+﻿using ApprovalCenter.Domain.Core.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ApprovalCenter.Domain.Alert
 {

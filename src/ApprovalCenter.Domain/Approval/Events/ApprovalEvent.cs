@@ -1,11 +1,11 @@
-﻿using ApprovalCenter.Domain.Core.Commands;
+﻿using ApprovalCenter.Domain.Core.Events;
 using System;
 
-namespace ApprovalCenter.Domain.Approval.Commands
+namespace ApprovalCenter.Domain.Approval.Events
 {
-    public abstract class ApprovalCommand : CommandIdentity
+    public class ApprovalEvent: EventIdentity
     {
-        public string Subject { get;protected set; }
+        public string Subject { get; protected set; }
         public string Description { get; protected set; }
         public bool? IsApproval { get; protected set; }
         public string Justification { get; protected set; }

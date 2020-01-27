@@ -1,14 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ApprovalCenter.Domain.Approval.Validations;
+using System;
 
 namespace ApprovalCenter.Domain.Approval.Commands
 {
     public class DeleteApprovalCommand : ApprovalCommand
     {
+        public DeleteApprovalCommand(Guid id)
+        {
+            this.Id = id;
+        }
         public override bool IsValid()
         {
-            throw new NotImplementedException();
+            ValidationResult = new DeleteApprovalCommandValidation().Validate(this);
+            return ValidationResult.IsValid;
         }
     }
 }

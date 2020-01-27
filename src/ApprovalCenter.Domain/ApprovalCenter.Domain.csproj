@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Approval\Events\" />
     <Folder Include="General\Models\" />
     <Folder Include="General\Events\" />
     <Folder Include="General\EventHandlers\" />

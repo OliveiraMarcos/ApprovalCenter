@@ -1,11 +1,10 @@
-﻿using ApprovalCenter.Domain.Approval.Validations;
-using System;
+﻿using System;
 
-namespace ApprovalCenter.Domain.Approval.Commands
+namespace ApprovalCenter.Domain.Approval.Events
 {
-    public class InsertNewApprovalCommand : ApprovalCommand
+    public class ApprovalUpdateEvent : ApprovalEvent
     {
-        public InsertNewApprovalCommand(string subject
+        public ApprovalUpdateEvent(Guid id, string subject
                                         , string description
                                         , bool? isApproval
                                         , string justification
@@ -24,11 +23,8 @@ namespace ApprovalCenter.Domain.Approval.Commands
             this.DateCreate = dateCreate;
             this.DateApproval = dateApproval;
             this.DateRead = dateRead;
-        }
-        public override bool IsValid()
-        {
-            ValidationResult = new InsertNewApprovalCommandValidation().Validate(this);
-            return ValidationResult.IsValid;
+            Id = id;
+            AggregateId = id;
         }
     }
 }
