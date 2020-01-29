@@ -1,5 +1,5 @@
-# BaseFoundationProject
-Base foundation project to developed of others applications with DDD, CQRS and Event Sourcing
+# ApprovalCenter
+Center Approval project to developed of others applications with DDD, CQRS and Event Sourcing
 
 [![Lisence](https://img.shields.io/github/license/OliveiraMarcos/BaseFoundationProject)](LICENSE)
 
