@@ -56,7 +56,5 @@ namespace ApprovalCenter.Domain.Approval.Entities
         public DateTime DateCreate { get; protected set; }
         public DateTime? DateApproval { get; protected set; }
         public DateTime? DateRead { get; protected set; }
-
-        }
     }
 }

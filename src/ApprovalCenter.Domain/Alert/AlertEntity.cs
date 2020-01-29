@@ -1,4 +1,5 @@
-﻿using ApprovalCenter.Domain.Core.Models;
+﻿using ApprovalCenter.Domain.Category.Entities;
+using ApprovalCenter.Domain.Core.Models;
 using System;
 
 namespace ApprovalCenter.Domain.Alert

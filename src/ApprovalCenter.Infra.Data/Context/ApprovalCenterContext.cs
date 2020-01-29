@@ -1,4 +1,5 @@
 ﻿using ApprovalCenter.Domain.Approval.Entities;
+using ApprovalCenter.Domain.Category.Entities;
 using ApprovalCenter.Infra.Data.ContextConfiguration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,8 +20,9 @@ namespace ApprovalCenter.Infra.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ApprovalContextConfiguration()); 
-            modelBuilder.ApplyConfiguration(new CategoryContextConfiguration());
+            //modelBuilder.ApplyConfiguration(new ApprovalContextConfiguration()); 
+            //modelBuilder.ApplyConfiguration(new CategoryContextConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApprovalCenterContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
 
