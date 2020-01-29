@@ -8,7 +8,9 @@ namespace ApprovalCenter.Application.Interfaces.Services
     public interface IBaseAppService<TDTO, TEntity> : IDisposable where TDTO : class where TEntity : class
     {
         void Insert<TCommand>(TDTO dto) where TCommand : Command;
-        void Update<TCommand>(TDTO entity) where TCommand : Command;
+        void Update<TCommand>(TDTO dto) where TCommand : Command;
+        void Insert(TDTO dto);
+        void Update(TDTO dto);
         void Delete(Guid id);
         TDTO GetById(Guid id);
         IEnumerable<TDTO> GetAll();

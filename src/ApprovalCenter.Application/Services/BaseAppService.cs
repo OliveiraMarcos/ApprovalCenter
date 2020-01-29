@@ -28,6 +28,8 @@ namespace ApprovalCenter.Application.Services
             Bus = bus;
             _eventStoreRepository = eventStoreRepository;
         }
+        public abstract void Insert(TDTO dto);
+        public abstract void Update(TDTO dto);
         public abstract void Delete(Guid id);
 
         public void Dispose()
