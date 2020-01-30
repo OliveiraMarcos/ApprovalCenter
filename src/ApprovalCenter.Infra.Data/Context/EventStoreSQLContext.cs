@@ -9,9 +9,9 @@ namespace ApprovalCenter.Infra.Data.Context
     public class EventStoreSQLContext : DbContext
     {
         public DbSet<StoredEvent> StoredEvent { get; set; }
-        private readonly IHostingEnvironment _env;
+        private readonly IHostEnvironment _env;
 
-        public EventStoreSQLContext(IHostingEnvironment env)
+        public EventStoreSQLContext(IHostEnvironment env)
         {
             _env = env;
         }

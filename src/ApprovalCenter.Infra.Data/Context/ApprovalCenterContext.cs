@@ -11,9 +11,9 @@ namespace ApprovalCenter.Infra.Data.Context
     {
         public DbSet<ApprovalEntity> Approval { get; set; }
         public DbSet<CategoryEntity> Category { get; set; }
-        private readonly IHostingEnvironment _env;
+        private readonly IHostEnvironment _env;
 
-        public ApprovalCenterContext(IHostingEnvironment env)
+        public ApprovalCenterContext(IHostEnvironment env)
         {
             _env = env;
         }

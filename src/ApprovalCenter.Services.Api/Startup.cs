@@ -6,16 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using MediatR;
 using System;
 using ApprovalCenter.Infra.CrossCutting.Identity.Data;
-using ApprovalCenter.Infra.CrossCutting.Identity.Extensions;
 using ApprovalCenter.Infra.CrossCutting.Identity.Interfaces.Services;
 using ApprovalCenter.Infra.CrossCutting.Identity.Models;
 using ApprovalCenter.Infra.CrossCutting.Identity.Services;
 using ApprovalCenter.Infra.CrossCutting.IoC;
-using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 

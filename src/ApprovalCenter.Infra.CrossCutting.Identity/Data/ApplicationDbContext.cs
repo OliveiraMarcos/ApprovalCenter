@@ -1,18 +1,18 @@
-﻿using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using ApprovalCenter.Infra.CrossCutting.Identity.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace ApprovalCenter.Infra.CrossCutting.Identity.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        private readonly IHostingEnvironment _env;
+        private readonly IHostEnvironment _env;
 
         public ApplicationDbContext(
                     DbContextOptions<ApplicationDbContext> options,
-                    IHostingEnvironment env) : base(options)
+                    IHostEnvironment env) : base(options)
         {
             _env = env;
         }
