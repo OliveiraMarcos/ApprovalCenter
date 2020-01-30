@@ -12,7 +12,6 @@ using ApprovalCenter.Infra.CrossCutting.Identity.Authorization;
 using ApprovalCenter.Infra.CrossCutting.Identity.Interfaces.Services;
 using ApprovalCenter.Infra.CrossCutting.Identity.Models;
 using ApprovalCenter.Infra.CrossCutting.Identity.Services;
-using ApprovalCenter.Infra.Data.Context;
 using ApprovalCenter.Infra.Data.EventSourcing;
 using ApprovalCenter.Infra.Data.Repository.EventSourcing;
 using ApprovalCenter.Infra.Data.UoW;
@@ -37,12 +36,10 @@ namespace ApprovalCenter.Infra.CrossCutting.IoC
 
             // Infra - Data
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddDbContext<ApprovalCenterContext>();
 
             // Infra - Data EventSourcing
             services.AddScoped<IEventStoreRepository, EventStoreSQLRepository>();
             services.AddScoped<IEventStore, SqlEventStore>();
-            services.AddDbContext<EventStoreSQLContext>();
 
             // Infra - Identity Services
             services.AddTransient<IEmailSender, AuthEmailMessageSender>();

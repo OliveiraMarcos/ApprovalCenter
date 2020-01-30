@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
@@ -15,6 +14,7 @@ using ApprovalCenter.Infra.CrossCutting.Identity.Services;
 using ApprovalCenter.Infra.CrossCutting.IoC;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using ApprovalCenter.Services.Api.Configurations;
 
 namespace ApprovalCenter.Services.Api
 {
@@ -43,8 +43,8 @@ namespace ApprovalCenter.Services.Api
         public void ConfigureServices(IServiceCollection services)
         {
             
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDatabaseSetup(Configuration);
+
             services.AddSingleton<IJwt, JwtConfigurationRecorver>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -105,6 +105,9 @@ namespace ApprovalCenter.Services.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseRouting();
+
             app.UseCors(c =>
             {
                 c.AllowAnyHeader();
@@ -114,7 +117,10 @@ namespace ApprovalCenter.Services.Api
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             app.UseSwagger();
             app.UseSwaggerUI(s =>
