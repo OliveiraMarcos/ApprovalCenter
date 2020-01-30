@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ApprovalCenter.Domain.Core.Interfaces.Bus;
@@ -13,6 +12,7 @@ using ApprovalCenter.Domain.Core.Notifications;
 using ApprovalCenter.Infra.CrossCutting.Identity.Interfaces.Services;
 using ApprovalCenter.Infra.CrossCutting.Identity.Models;
 using ApprovalCenter.Infra.CrossCutting.Identity.ViewModels.Account;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {

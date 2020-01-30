@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿//using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +16,8 @@ using ApprovalCenter.Infra.CrossCutting.Identity.Models;
 using ApprovalCenter.Infra.CrossCutting.Identity.Services;
 using ApprovalCenter.Infra.CrossCutting.IoC;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace ApprovalCenter.Services.Api
 {
@@ -23,7 +25,7 @@ namespace ApprovalCenter.Services.Api
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -52,40 +54,40 @@ namespace ApprovalCenter.Services.Api
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(option => {
-                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options => {
-                var tokenConf = Configuration.GetTokenConfigurations("Jwt");
-                options.SaveToken = true;
-                options.RequireHttpsMetadata = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidateLifetime = true,
-                    ValidAudience = tokenConf.Audience,
-                    ValidIssuer = tokenConf.Issuer,
-                    IssuerSigningKey = tokenConf.Signing.Key,
-                    ClockSkew = TimeSpan.Zero
-                };
-            });
+            //services.AddAuthentication(option => {
+            //    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(options => {
+            //    var tokenConf = Configuration.GetTokenConfigurations("Jwt");
+            //    options.SaveToken = true;
+            //    options.RequireHttpsMetadata = true;
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = true,
+            //        ValidateAudience = true,
+            //        ValidateIssuerSigningKey = true,
+            //        ValidateLifetime = true,
+            //        ValidAudience = tokenConf.Audience,
+            //        ValidIssuer = tokenConf.Issuer,
+            //        IssuerSigningKey = tokenConf.Signing.Key,
+            //        ClockSkew = TimeSpan.Zero
+            //    };
+            //});
 
             services.AddSwaggerGen(s =>
             {
-                s.SwaggerDoc("v1", new Info
+                s.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
                     Title = "ApprovalCenter Project",
                     Description = "ApprovalCenter API Swagger surface",
-                    Contact = new Contact { Name = "Marcos Oliveira", Email = "marcos.ads.ti@gmail.com", Url = "https://github.com/OliveiraMarcos" },
-                    License = new License { Name = "MIT", Url = "https://github.com/OliveiraMarcos/BaseFoundationProject/blob/master/LICENSE" }
+                    Contact = new OpenApiContact { Name = "Marcos Oliveira", Email = "marcos.ads.ti@gmail.com", Url = new Uri("https://github.com/OliveiraMarcos") },
+                    License = new OpenApiLicense { Name = "MIT", Url = new Uri("https://github.com/OliveiraMarcos/BaseFoundationProject/blob/master/LICENSE") }
                 });
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             // Adding MediatR for Domain Events and Notifications
             services.AddMediatR(typeof(Startup));
@@ -95,7 +97,7 @@ namespace ApprovalCenter.Services.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
