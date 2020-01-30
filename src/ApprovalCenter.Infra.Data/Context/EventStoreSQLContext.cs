@@ -19,6 +19,7 @@ namespace ApprovalCenter.Infra.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new StoredEventContextConfiguration());
+            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(EventStoreSQLContext).Assembly);
 
             base.OnModelCreating(modelBuilder);
         }
