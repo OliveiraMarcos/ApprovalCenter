@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MediatR;
 using Microsoft.Extensions.Hosting;
 using ApprovalCenter.Services.Api.Configurations;
+using Microsoft.AspNetCore.Http;
 
 namespace ApprovalCenter.Services.Api
 {
@@ -50,11 +51,13 @@ namespace ApprovalCenter.Services.Api
             // Swagger Config
             services.AddSwaggerSetup();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             // Adding MediatR for Domain Events and Notifications
             services.AddMediatR(typeof(Startup));
 
+            // ASP.NET HttpContext dependency
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // .NET Native DI Abstraction
             services.AddDependencyInjectionSetup();
@@ -67,11 +70,6 @@ namespace ApprovalCenter.Services.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -83,7 +81,9 @@ namespace ApprovalCenter.Services.Api
                 c.AllowAnyOrigin();
             });
 
+            app.UseAuthorization();
             app.UseAuthentication();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
