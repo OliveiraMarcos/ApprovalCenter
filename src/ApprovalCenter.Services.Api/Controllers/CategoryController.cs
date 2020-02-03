@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
+
+    [Route("api/[controller]")]
     public class CategoryController : ApiController
     {
         private readonly ICategoryAppService _categoryAppService;
@@ -18,19 +20,16 @@ namespace ApprovalCenter.Services.Api.Controllers
             _categoryAppService = categoryAppService;
         }
 
-
         // GET api/category
-        [HttpGet("category")]
+        [HttpGet]
         //[AllowAnonymous]
-        //[Route("category")]
         public IActionResult Get()
         {
             return Response(_categoryAppService.GetAll());
         }
 
         // GET api/category/5
-        [HttpGet("category/{id:guid}")]
-        //[Route("category/{id:guid}")]
+        [HttpGet("{id:guid}")]
         public IActionResult Get(Guid id)
         {
             var categoryViewModel = _categoryAppService.GetById(id);
@@ -38,8 +37,7 @@ namespace ApprovalCenter.Services.Api.Controllers
         }
 
         // POST api/category
-        [HttpPost("category")]
-        //[Route("category")]
+        [HttpPost]
         public IActionResult Post([FromBody] CategoryDTO categoryDTO)
         {
             if (!ModelState.IsValid)
@@ -52,8 +50,7 @@ namespace ApprovalCenter.Services.Api.Controllers
         }
 
         // PUT api/category/5
-        [HttpPut("category")]
-        //[Route("category")]
+        [HttpPut]
         public IActionResult Put([FromBody] CategoryDTO categoryDTO)
         {
             if (!ModelState.IsValid)
@@ -66,8 +63,7 @@ namespace ApprovalCenter.Services.Api.Controllers
         }
 
         // DELETE api/category/5
-        [HttpDelete("category")]
-        //[Route("category")]
+        [HttpDelete("{id:guid}")]
         public IActionResult Delete(Guid id)
         {
             _categoryAppService.Delete(id);

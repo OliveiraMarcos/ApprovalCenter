@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
+
+    [Route("api/[controller]")]
     public class ApprovalController : ApiController
     {
         private readonly IApprovalAppService _approvalAppService;
@@ -20,17 +22,15 @@ namespace ApprovalCenter.Services.Api.Controllers
 
 
         // GET api/approval
-        [HttpGet("approval")]
+        [HttpGet]
         //[AllowAnonymous]
-        //[Route("approval")]
         public IActionResult Get()
         {
             return Response(_approvalAppService.GetAll());
         }
 
         // GET api/approval/5
-        [HttpGet("approval/{id:guid}")]
-        //[Route("approval/{id:guid}")]
+        [HttpGet("{id:guid}")]
         public IActionResult Get(Guid id)
         {
             var approvalViewModel = _approvalAppService.GetById(id);
@@ -38,8 +38,7 @@ namespace ApprovalCenter.Services.Api.Controllers
         }
 
         // POST api/approval
-        [HttpPost("approval")]
-        //[Route("approval")]
+        [HttpPost]
         public IActionResult Post([FromBody] ApprovalDTO approvalDTO)
         {
             if (!ModelState.IsValid)
@@ -52,8 +51,7 @@ namespace ApprovalCenter.Services.Api.Controllers
         }
 
         // PUT api/approval/5
-        [HttpPut("approval")]
-        //[Route("approval")]
+        [HttpPut]
         public IActionResult Put([FromBody] ApprovalDTO approvalDTO)
         {
             if (!ModelState.IsValid)
@@ -66,8 +64,7 @@ namespace ApprovalCenter.Services.Api.Controllers
         }
 
         // DELETE api/approval/5
-        [HttpDelete("approval")]
-        //[Route("approval")]
+        [HttpDelete("{id:guid}")]
         public IActionResult Delete(Guid id)
         {
             _approvalAppService.Delete(id);
