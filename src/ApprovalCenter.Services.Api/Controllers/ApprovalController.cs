@@ -52,8 +52,8 @@ namespace ApprovalCenter.Services.Api.Controllers
         }
 
         // PUT api/approval/5
-        //[HttpPut("approval")]
-        [Route("approval")]
+        [HttpPut("approval")]
+        //[Route("approval")]
         public IActionResult Put([FromBody] ApprovalDTO approvalDTO)
         {
             if (!ModelState.IsValid)

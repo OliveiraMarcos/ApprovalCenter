@@ -45,6 +45,9 @@ namespace ApprovalCenter.Services.Api
             // Auto Mapper
             services.AddAutoMapperSetup();
 
+            // Authorization
+            services.AddAuthSetup(Configuration);
+
             // WebAPI Config
             services.AddControllers();
 

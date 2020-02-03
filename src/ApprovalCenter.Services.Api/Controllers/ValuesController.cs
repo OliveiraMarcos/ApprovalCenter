@@ -8,6 +8,7 @@ using ApprovalCenter.Domain.Core.Notifications;
 namespace ApprovalCenter.Services.Api.Controllers
 {
     [Authorize]
+    [Route("api/[controller]")]
     public class ValuesController : ApiController
     {
         public ValuesController(INotificationHandler<DomainNotification> notifications,
@@ -18,15 +19,13 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // GET api/values
         [HttpGet]
-        [Route("values")]
         public IActionResult Get()
         {
             return Response(new string[] { "value1", "value2" });
         }
 
         // GET api/values/5
-        [HttpGet]
-        [Route("values/{id:guid}")]
+        [HttpGet("{id:guid}")]
         public IActionResult Get(Guid id)
         {
             return Response("value");
@@ -34,7 +33,6 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // POST api/values
         [HttpPost]
-        [Route("values")]
         public IActionResult Post([FromBody] string value)
         {
             return Response();
@@ -42,23 +40,20 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // PUT api/values/5
         [HttpPut]
-        [Route("values")]
         public IActionResult Put([FromBody] string value)
         {
             return Response();
         }
 
         // DELETE api/values/5
-        [HttpDelete]
-        [Route("values")]
+        [HttpDelete("{id:guid}")]
         public IActionResult Delete(Guid id)
         {
             return Response();
         }
 
         // GET api/values/history/5
-        [HttpGet]
-        [Route("values/history/{id:guid}")]
+        [HttpGet("/history/{id:guid}")]
         public IActionResult History(Guid id)
         {
             return Response();

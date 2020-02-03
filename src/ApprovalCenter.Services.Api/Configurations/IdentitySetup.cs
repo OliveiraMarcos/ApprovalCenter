@@ -1,4 +1,5 @@
-﻿using ApprovalCenter.Infra.CrossCutting.Identity.Data;
+﻿using ApprovalCenter.Infra.CrossCutting.Identity.Authorization;
+using ApprovalCenter.Infra.CrossCutting.Identity.Data;
 using ApprovalCenter.Infra.CrossCutting.Identity.Extensions;
 using ApprovalCenter.Infra.CrossCutting.Identity.Interfaces.Services;
 using ApprovalCenter.Infra.CrossCutting.Identity.Models;
@@ -46,6 +47,17 @@ namespace ApprovalCenter.Services.Api.Configurations
                     IssuerSigningKey = tokenConf.Signing.Key,
                     ClockSkew = TimeSpan.Zero
                 };
+            });
+        }
+
+        public static void AddAuthSetup(this IServiceCollection services, IConfiguration configuration)
+        {
+            if (services == null) throw new ArgumentNullException(nameof(services));
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("CanWriteCategoryData", policy => policy.Requirements.Add(new ClaimRequirement("Category", "Write")));
+                options.AddPolicy("CanRemoveCategoryData", policy => policy.Requirements.Add(new ClaimRequirement("Category", "Remove")));
             });
         }
     }

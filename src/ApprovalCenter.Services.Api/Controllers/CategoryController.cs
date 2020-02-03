@@ -52,8 +52,8 @@ namespace ApprovalCenter.Services.Api.Controllers
         }
 
         // PUT api/category/5
-        //[HttpPut("category")]
-        [Route("category")]
+        [HttpPut("category")]
+        //[Route("category")]
         public IActionResult Put([FromBody] CategoryDTO categoryDTO)
         {
             if (!ModelState.IsValid)
