@@ -4,11 +4,13 @@ using ApprovalCenter.Application.Interfaces.Services;
 using ApprovalCenter.Domain.Core.Interfaces.Bus;
 using ApprovalCenter.Domain.Core.Notifications;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
 
+    [Authorize]
     [Route("api/[controller]")]
     public class CategoryController : ApiController
     {
@@ -22,7 +24,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // GET api/category
         [HttpGet]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public IActionResult Get()
         {
             return Response(_categoryAppService.GetAll());

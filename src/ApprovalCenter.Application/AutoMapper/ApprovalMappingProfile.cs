@@ -8,7 +8,14 @@ namespace ApprovalCenter.Application.AutoMapper
     {
         public ApprovalMappingProfile()
         {
-            CreateMap<ApprovalEntity, ApprovalDTO>().ReverseMap();
+            CreateMap<ApprovalEntity, ApprovalDTO>()
+                .ReverseMap()
+                .ConstructUsing(c => new ApprovalEntity(c.Id,
+                                                        c.CategoryId,
+                                                        c.Subject,
+                                                        c.Description,
+                                                        c.EmailApproval,
+                                                        c.DateCreate));
         }
     }
 }

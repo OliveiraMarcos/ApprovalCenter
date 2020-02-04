@@ -19,6 +19,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // GET api/values
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Get()
         {
             return Response(new string[] { "value1", "value2" });

@@ -2,9 +2,13 @@
 
 using ApprovalCenter.Application.Interfaces.Services;
 using ApprovalCenter.Application.Services;
+using ApprovalCenter.Domain.Approval.CommandHandlers;
+using ApprovalCenter.Domain.Approval.Commands;
 using ApprovalCenter.Domain.Approval.EventHandler;
 using ApprovalCenter.Domain.Approval.Events;
 using ApprovalCenter.Domain.Approval.Interfaces.Repository;
+using ApprovalCenter.Domain.Category.CommandHandlers;
+using ApprovalCenter.Domain.Category.Commands;
 using ApprovalCenter.Domain.Category.EventHandlers;
 using ApprovalCenter.Domain.Category.Events;
 using ApprovalCenter.Domain.Category.Interfaces;
@@ -36,12 +40,13 @@ namespace ApprovalCenter.Infra.CrossCutting.IoC
             // Domain Bus (Mediator)
             services.AddScoped<IMediatorHandler, InMemoryBus>();
 
+            // ASP.NET Authorization Polices
+            services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>();
+
             //Application 
             services.AddScoped<ICategoryAppService, CategoryAppService>();
             services.AddScoped<IApprovalAppService, ApprovalAppService>();
 
-            // ASP.NET Authorization Polices
-            services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>();
 
             // Domain - Events
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
@@ -51,6 +56,14 @@ namespace ApprovalCenter.Infra.CrossCutting.IoC
             services.AddScoped<INotificationHandler<ApprovalInsertEvent>, ApprovalEventHandler>();
             services.AddScoped<INotificationHandler<ApprovalUpdateEvent>, ApprovalEventHandler>();
             services.AddScoped<INotificationHandler<ApprovalDeleteEvent>, ApprovalEventHandler>();
+
+            // Domain - Commands
+            services.AddScoped<IRequestHandler<InsertNewCategoryCommand,bool>, CategoryCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateCategoryCommand,bool>, CategoryCommandHandler>();
+            services.AddScoped<IRequestHandler<DeleteCategoryCommand,bool>, CategoryCommandHandler>();
+            services.AddScoped<IRequestHandler<InsertNewApprovalCommand, bool>, ApprovalCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateApprovalCommand, bool>, ApprovalCommandHandler>();
+            services.AddScoped<IRequestHandler<DeleteApprovalCommand, bool>, ApprovalCommandHandler>();
 
             // Infra - Data
             services.AddScoped<ICategoryRepository, CategoryRepository>();
