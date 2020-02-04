@@ -15,7 +15,7 @@ namespace ApprovalCenter.Services.Api.Controllers
     public class CategoryController : ApiController
     {
         private readonly ICategoryAppService _categoryAppService;
-        protected CategoryController(ICategoryAppService categoryAppService, 
+        public CategoryController(ICategoryAppService categoryAppService, 
                                      INotificationHandler<DomainNotification> notifications, 
                                      IMediatorHandler mediator) : base(notifications, mediator)
         {
@@ -24,7 +24,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // GET api/category
         [HttpGet]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public IActionResult Get()
         {
             return Response(_categoryAppService.GetAll());

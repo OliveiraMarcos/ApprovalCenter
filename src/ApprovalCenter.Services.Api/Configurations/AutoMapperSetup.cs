@@ -12,7 +12,7 @@ namespace ApprovalCenter.Services.Api.Configurations
             if (services == null) throw new ArgumentNullException(nameof(services));
 
             services.AddAutoMapper(typeof(CategoryMappingProfile),typeof(ApprovalMappingProfile));
-
+            
         }
     }
 }

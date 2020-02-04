@@ -8,7 +8,7 @@ using ApprovalCenter.Domain.Core.Notifications;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
-    public class ApiController : ControllerBase
+    public abstract class ApiController : ControllerBase
     {
         private readonly DomainNotificationHandler _notifications;
         private readonly IMediatorHandler _mediator;

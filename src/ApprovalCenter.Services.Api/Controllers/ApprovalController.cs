@@ -13,7 +13,7 @@ namespace ApprovalCenter.Services.Api.Controllers
     public class ApprovalController : ApiController
     {
         private readonly IApprovalAppService _approvalAppService;
-        protected ApprovalController(IApprovalAppService approvalAppService,
+        public ApprovalController(IApprovalAppService approvalAppService,
                                      INotificationHandler<DomainNotification> notifications, 
                                      IMediatorHandler mediator) : base(notifications, mediator)
         {

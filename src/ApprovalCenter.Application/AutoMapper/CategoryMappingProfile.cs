@@ -8,7 +8,12 @@ namespace ApprovalCenter.Application.AutoMapper
     {
         public CategoryMappingProfile()
         {
-            CreateMap<CategoryEntity, CategoryDTO>().ReverseMap();
+            CreateMap<CategoryEntity, CategoryDTO>().ReverseMap()
+                                                    .ConstructUsing(e => new CategoryEntity(e.Id,
+                                                                                            e.Name,
+                                                                                            e.Description,
+                                                                                            e.DateCreate,
+                                                                                            e.DateEdit));
         }
     }
 }
