@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ApprovalCenter.Services.Api.Controllers
 {
 
-    [Authorize]
+    [Authorize(Policy = "CanReadCategoryData")]
     [Route("api/[controller]")]
     public class CategoryController : ApiController
     {
@@ -40,6 +40,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // POST api/category
         [HttpPost]
+        [Authorize(Policy = "CanWriteCategoryData")]
         public IActionResult Post([FromBody] CategoryDTO categoryDTO)
         {
             if (!ModelState.IsValid)
@@ -53,6 +54,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // PUT api/category/5
         [HttpPut]
+        [Authorize(Policy = "CanWriteCategoryData")]
         public IActionResult Put([FromBody] CategoryDTO categoryDTO)
         {
             if (!ModelState.IsValid)
@@ -66,6 +68,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // DELETE api/category/5
         [HttpDelete("{id:guid}")]
+        [Authorize(Policy = "CanRemoveCategoryData")]
         public IActionResult Delete(Guid id)
         {
             _categoryAppService.Delete(id);

@@ -58,6 +58,16 @@ namespace ApprovalCenter.Services.Api.Configurations
             {
                 options.AddPolicy("CanWriteCategoryData", policy => policy.Requirements.Add(new ClaimRequirement("Category", "Write")));
                 options.AddPolicy("CanRemoveCategoryData", policy => policy.Requirements.Add(new ClaimRequirement("Category", "Remove")));
+                options.AddPolicy("CanReadCategoryData", policy => policy.Requirements.Add(new ClaimRequirement("Category", "Read")));
+
+                options.AddPolicy("CanWriteApprovalData", policy => policy.Requirements.Add(new ClaimRequirement("Approval", "Write")));
+                options.AddPolicy("CanRemoveApprovalData", policy => policy.Requirements.Add(new ClaimRequirement("Approval", "Remove")));
+                options.AddPolicy("CanReadApprovalData", policy => policy.Requirements.Add(new ClaimRequirement("Approval", "Read")));
+
+
+                options.AddPolicy("CanWriteValuesData", policy => policy.Requirements.Add(new ClaimRequirement("Values", "Write")));
+                options.AddPolicy("CanRemoveValuesData", policy => policy.Requirements.Add(new ClaimRequirement("Values", "Remove")));
+                options.AddPolicy("CanReadValuesData", policy => policy.Requirements.Add(new ClaimRequirement("Values", "Read")));
             });
         }
     }

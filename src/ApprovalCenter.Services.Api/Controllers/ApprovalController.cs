@@ -4,12 +4,14 @@ using ApprovalCenter.Application.Interfaces.Services;
 using ApprovalCenter.Domain.Core.Interfaces.Bus;
 using ApprovalCenter.Domain.Core.Notifications;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
 
     [Route("api/[controller]")]
+    [Authorize(Policy = "CanReadApprovalData")]
     public class ApprovalController : ApiController
     {
         private readonly IApprovalAppService _approvalAppService;
@@ -39,6 +41,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // POST api/approval
         [HttpPost]
+        [Authorize(Policy = "CanWriteApprovalData")]
         public IActionResult Post([FromBody] ApprovalDTO approvalDTO)
         {
             if (!ModelState.IsValid)
@@ -52,6 +55,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // PUT api/approval/5
         [HttpPut]
+        [Authorize(Policy = "CanWriteApprovalData")]
         public IActionResult Put([FromBody] ApprovalDTO approvalDTO)
         {
             if (!ModelState.IsValid)
@@ -65,6 +69,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // DELETE api/approval/5
         [HttpDelete("{id:guid}")]
+        [Authorize(Policy = "CanRemoveApprovalData")]
         public IActionResult Delete(Guid id)
         {
             _approvalAppService.Delete(id);

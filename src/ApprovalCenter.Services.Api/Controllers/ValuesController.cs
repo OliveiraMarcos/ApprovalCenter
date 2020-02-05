@@ -7,7 +7,7 @@ using ApprovalCenter.Domain.Core.Notifications;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "CanReadCategoryData")]
     [Route("api/[controller]")]
     public class ValuesController : ApiController
     {
@@ -19,7 +19,6 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // GET api/values
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult Get()
         {
             return Response(new string[] { "value1", "value2" });
@@ -34,6 +33,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // POST api/values
         [HttpPost]
+        [Authorize(Policy ="CanWriteValuesData")]
         public IActionResult Post([FromBody] string value)
         {
             return Response();
@@ -41,6 +41,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // PUT api/values/5
         [HttpPut]
+        [Authorize(Policy = "CanWriteValuesData")]
         public IActionResult Put([FromBody] string value)
         {
             return Response();
@@ -48,6 +49,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id:guid}")]
+        [Authorize(Policy = "CanRemoveValuesData")]
         public IActionResult Delete(Guid id)
         {
             return Response();
