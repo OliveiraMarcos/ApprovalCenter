@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using ApprovalCenter.Domain.Core.Interfaces.Bus;
 using ApprovalCenter.Domain.Core.Notifications;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
+    [Authorize]
     public abstract class ApiController : ControllerBase
     {
         private readonly DomainNotificationHandler _notifications;

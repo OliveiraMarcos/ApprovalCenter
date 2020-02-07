@@ -7,7 +7,6 @@ using ApprovalCenter.Domain.Core.Notifications;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
-    [Authorize(Policy = "CanReadCategoryData")]
     [Route("api/[controller]")]
     public class ValuesController : ApiController
     {
@@ -19,6 +18,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // GET api/values
         [HttpGet]
+        [Authorize(Policy = "CanReadValuesData")]
         public IActionResult Get()
         {
             return Response(new string[] { "value1", "value2" });
@@ -26,6 +26,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // GET api/values/5
         [HttpGet("{id:guid}")]
+        [Authorize(Policy = "CanReadValuesData")]
         public IActionResult Get(Guid id)
         {
             return Response("value");
@@ -57,6 +58,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // GET api/values/history/5
         [HttpGet("/history/{id:guid}")]
+        [Authorize(Policy = "CanReadValuesData")]
         public IActionResult History(Guid id)
         {
             return Response();

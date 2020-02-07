@@ -11,7 +11,6 @@ namespace ApprovalCenter.Services.Api.Controllers
 {
 
     [Route("api/[controller]")]
-    [Authorize(Policy = "CanReadApprovalData")]
     public class ApprovalController : ApiController
     {
         private readonly IApprovalAppService _approvalAppService;
@@ -25,6 +24,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // GET api/approval
         [HttpGet]
+        [Authorize(Policy = "CanReadApprovalData")]
         //[AllowAnonymous]
         public IActionResult Get()
         {
@@ -33,6 +33,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // GET api/approval/5
         [HttpGet("{id:guid}")]
+        [Authorize(Policy = "CanReadApprovalData")]
         public IActionResult Get(Guid id)
         {
             var approvalViewModel = _approvalAppService.GetById(id);

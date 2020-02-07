@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace ApprovalCenter.Services.Api.Controllers
 {
 
-    [Authorize(Policy = "CanReadCategoryData")]
     [Route("api/[controller]")]
     public class CategoryController : ApiController
     {
@@ -25,6 +24,7 @@ namespace ApprovalCenter.Services.Api.Controllers
         // GET api/category
         [HttpGet]
         //[AllowAnonymous]
+        [Authorize(Policy = "CanReadCategoryData")]
         public IActionResult Get()
         {
             return Response(_categoryAppService.GetAll());
@@ -32,6 +32,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // GET api/category/5
         [HttpGet("{id:guid}")]
+        [Authorize(Policy = "CanReadCategoryData")]
         public IActionResult Get(Guid id)
         {
             var categoryViewModel = _categoryAppService.GetById(id);

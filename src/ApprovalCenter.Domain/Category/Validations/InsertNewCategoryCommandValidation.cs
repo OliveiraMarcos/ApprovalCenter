@@ -6,7 +6,6 @@ namespace ApprovalCenter.Domain.Category.Validations
     {
         public InsertNewCategoryCommandValidation()
         {
-            ValidateId();
             ValidateName();
             ValidateDescription();
         }

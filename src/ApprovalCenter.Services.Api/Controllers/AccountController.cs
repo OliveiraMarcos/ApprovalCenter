@@ -16,7 +16,6 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
-    [Authorize]
     public class AccountController : ApiController
     {
         private readonly UserManager<ApplicationUser> _userManager;

@@ -64,10 +64,10 @@ namespace ApprovalCenter.Domain.Category.CommandHandlers
                 NotifyValidationErrors(request);
                 return Task.FromResult(false);
             }
-            var category = new CategoryEntity(Guid.NewGuid()
+            var category = new CategoryEntity(request.Id
                                               , request.Name
                                               , request.Description
-                                              , DateTime.Now
+                                              , request.DateCreate
                                               , DateTime.Now);
 
             _categoryRepository.Attach(category);
@@ -78,7 +78,7 @@ namespace ApprovalCenter.Domain.Category.CommandHandlers
                                               , category.Name
                                               , category.Description
                                               , category.DateCreate
-                                              , DateTime.Now));
+                                              , category.DateEdit));
             }
 
             return Task.FromResult(true);

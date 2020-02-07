@@ -5,17 +5,12 @@ namespace ApprovalCenter.Domain.Category.Commands
 {
     public class InsertNewCategoryCommand : CategoryCommand
     {
-        public InsertNewCategoryCommand(Guid id,
+        public InsertNewCategoryCommand(
             string name,
-            string description,
-            DateTime dateCreate,
-            DateTime dateEdit)
+            string description)
         {
-            this.Id = id;
             this.Name = name;
             this.Description = description;
-            this.DateCreate = dateCreate;
-            this.DateEdit = dateEdit;
         }
         public override bool IsValid()
         {

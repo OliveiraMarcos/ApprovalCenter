@@ -5,6 +5,7 @@ using ApprovalCenter.Infra.CrossCutting.Identity.Interfaces.Services;
 using ApprovalCenter.Infra.CrossCutting.Identity.Models;
 using ApprovalCenter.Infra.CrossCutting.Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,7 @@ namespace ApprovalCenter.Services.Api.Configurations
             if (services == null) throw new ArgumentNullException(nameof(services));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -47,6 +49,13 @@ namespace ApprovalCenter.Services.Api.Configurations
                     IssuerSigningKey = tokenConf.Signing.Key,
                     ClockSkew = TimeSpan.Zero
                 };
+            });
+
+            services.AddAuthorization(options =>
+            {
+                var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
+                defaultAuthorizationPolicyBuilder = defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
+                options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
             });
         }
 
