@@ -5,7 +5,8 @@ namespace ApprovalCenter.Domain.Approval.Commands
 {
     public class UpdateApprovalCommand : ApprovalCommand
     {
-        public UpdateApprovalCommand(string subject
+        public UpdateApprovalCommand(Guid id
+                                        , string subject
                                         , string description
                                         , bool? isApproval
                                         , string justification
@@ -15,6 +16,7 @@ namespace ApprovalCenter.Domain.Approval.Commands
                                         , DateTime? dateApproval
                                         , DateTime? dateRead)
         {
+            this.Id = id;
             this.Subject = subject;
             this.Description = description;
             this.IsApproval = isApproval;

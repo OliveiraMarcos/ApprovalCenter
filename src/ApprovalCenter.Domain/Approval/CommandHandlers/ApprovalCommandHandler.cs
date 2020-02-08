@@ -41,7 +41,7 @@ namespace ApprovalCenter.Domain.Approval.CommandHandlers
                                               , request.Subject
                                               , request.Description
                                               , request.EmailApproval
-                                              , request.DateCreate);
+                                              , DateTime.Now);
 
             _approvalRepository.Add(approval);
 
@@ -65,7 +65,7 @@ namespace ApprovalCenter.Domain.Approval.CommandHandlers
                 NotifyValidationErrors(request);
                 return Task.FromResult(false);
             }
-            var approval = new ApprovalEntity(Guid.NewGuid()
+            var approval = new ApprovalEntity(request.Id
                                               , request.CategoryId
                                               , request.Subject
                                               , request.Description

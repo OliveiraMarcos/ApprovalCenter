@@ -6,7 +6,6 @@ namespace ApprovalCenter.Domain.Approval.Validations
     {
         public InsertNewApprovalCommandValidation()
         {
-            ValidateId();
             ValidateEmailApproval();
             ValidateSubject();
             ValidateDescription();
