@@ -13,6 +13,8 @@ using ApprovalCenter.Infra.CrossCutting.Identity.Interfaces.Services;
 using ApprovalCenter.Infra.CrossCutting.Identity.Models;
 using ApprovalCenter.Infra.CrossCutting.Identity.ViewModels.Account;
 using System.IdentityModel.Tokens.Jwt;
+using ApprovalCenter.Infra.CrossCutting.Identity.Authorization.Jwt;
+using Microsoft.Extensions.Options;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
@@ -21,20 +23,20 @@ namespace ApprovalCenter.Services.Api.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
-        private readonly IJwt _jwt;
+        private readonly TokenConfigurations _tokenConfigurations;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             INotificationHandler<DomainNotification> notifications,
             ILoggerFactory loggerFactory,
-            IJwt jwt,
+            IOptions<TokenConfigurations> options,
             IMediatorHandler mediator) : base(notifications, mediator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<AccountController>();
-            _jwt = jwt;
+            _tokenConfigurations = options.Value;
         }
 
 
@@ -53,7 +55,6 @@ namespace ApprovalCenter.Services.Api.Controllers
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, true);
             if (result.Succeeded)
             {
-                var jwt = _jwt.GetConfigurations("Jwt");
                 var user = await _userManager.FindByEmailAsync(model.Email);
 
                 var principal = await _signInManager.CreateUserPrincipalAsync(user);
@@ -61,14 +62,20 @@ namespace ApprovalCenter.Services.Api.Controllers
                 var jwtSecurity = new JwtSecurityTokenHandler();
                 var token = jwtSecurity.CreateToken(new SecurityTokenDescriptor
                 {
-                    Issuer = jwt.Issuer,
-                    Audience = jwt.Audience,
-                    Expires = DateTime.UtcNow.AddMinutes(jwt.Seconds),
-                    SigningCredentials = jwt.Signing.Credentials,
+                    Issuer = _tokenConfigurations.Issuer,
+                    Audience = _tokenConfigurations.Audience,
+                    Expires = DateTime.UtcNow.AddMinutes(_tokenConfigurations.Seconds),
+                    SigningCredentials = _tokenConfigurations.Signing.Credentials,
                     Subject = identity
                 });
                 _logger.LogInformation(1, "User logged in.");
                 return Response(new TokenViewModel(model.Email, jwtSecurity.WriteToken(token), token.ValidTo));
+            }
+
+            if (result.IsLockedOut)
+            {
+                NotifyError(result.ToString(), "User temporarily blocked by invalid attempts");
+                return Response(model);
             }
 
             NotifyError(result.ToString(), "Login failure");
@@ -92,6 +99,8 @@ namespace ApprovalCenter.Services.Api.Controllers
 
             if (result.Succeeded)
             {
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                
                 // User claim for write customers data
                 await _userManager.AddClaimAsync(user, new Claim("Approval", "Read"));
                 await _userManager.AddClaimAsync(user, new Claim("Approval", "Write"));

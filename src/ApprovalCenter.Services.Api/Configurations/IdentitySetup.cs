@@ -1,4 +1,5 @@
 ﻿using ApprovalCenter.Infra.CrossCutting.Identity.Authorization;
+using ApprovalCenter.Infra.CrossCutting.Identity.Authorization.Jwt;
 using ApprovalCenter.Infra.CrossCutting.Identity.Data;
 using ApprovalCenter.Infra.CrossCutting.Identity.Extensions;
 using ApprovalCenter.Infra.CrossCutting.Identity.Interfaces.Services;
@@ -25,7 +26,9 @@ namespace ApprovalCenter.Services.Api.Configurations
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddSingleton<IJwt, JwtConfigurationRecorver>();
+            services.AddOptionsSettings(configuration);
+
+            var tokenConf = configuration.GetSection<TokenConfigurations>("Jwt");
 
 
             services.AddAuthentication(option =>
@@ -35,7 +38,7 @@ namespace ApprovalCenter.Services.Api.Configurations
                 option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
-                var tokenConf = configuration.GetTokenConfigurations("Jwt");
+                //var tokenConf = services.BuildServiceProvider().GetService<IJwt>().GetTokenConfigurations();
                 options.SaveToken = true;
                 options.RequireHttpsMetadata = true;
                 options.TokenValidationParameters = new TokenValidationParameters

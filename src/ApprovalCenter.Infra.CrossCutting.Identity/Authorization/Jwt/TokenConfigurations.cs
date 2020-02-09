@@ -8,12 +8,8 @@ namespace ApprovalCenter.Infra.CrossCutting.Identity.Authorization.Jwt
         public string Audience { get; set; }
         public string Issuer { get; set; }
         public int Seconds { get; set; }
-        public SigningConfigurations Signing { get; }
-
-        public TokenConfigurations()
-        {
-            Signing = new SigningConfigurations();
-        }
+        private static SigningConfigurations _signing;
+        public SigningConfigurations Signing { get { if(_signing == null) _signing = new SigningConfigurations(); return _signing; } }
 
         public class SigningConfigurations
         {
