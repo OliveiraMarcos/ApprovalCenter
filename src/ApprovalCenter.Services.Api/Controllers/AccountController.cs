@@ -15,6 +15,7 @@ using ApprovalCenter.Infra.CrossCutting.Identity.ViewModels.Account;
 using System.IdentityModel.Tokens.Jwt;
 using ApprovalCenter.Infra.CrossCutting.Identity.Authorization.Jwt;
 using Microsoft.Extensions.Options;
+using ApprovalCenter.Infra.CrossCutting.Identity.Extensions;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
@@ -24,6 +25,7 @@ namespace ApprovalCenter.Services.Api.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
         private readonly TokenConfigurations _tokenConfigurations;
+        private readonly IEmailSender _emailSender;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
@@ -31,12 +33,14 @@ namespace ApprovalCenter.Services.Api.Controllers
             INotificationHandler<DomainNotification> notifications,
             ILoggerFactory loggerFactory,
             IOptions<TokenConfigurations> options,
+            IEmailSender emailSender,
             IMediatorHandler mediator) : base(notifications, mediator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<AccountController>();
             _tokenConfigurations = options.Value;
+            _emailSender = emailSender;
         }
 
 
@@ -56,20 +60,27 @@ namespace ApprovalCenter.Services.Api.Controllers
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
-
-                var principal = await _signInManager.CreateUserPrincipalAsync(user);
-                ClaimsIdentity identity = principal.Identity as ClaimsIdentity;
-                var jwtSecurity = new JwtSecurityTokenHandler();
-                var token = jwtSecurity.CreateToken(new SecurityTokenDescriptor
+                if (user.EmailConfirmed)
                 {
-                    Issuer = _tokenConfigurations.Issuer,
-                    Audience = _tokenConfigurations.Audience,
-                    Expires = DateTime.UtcNow.AddMinutes(_tokenConfigurations.Seconds),
-                    SigningCredentials = _tokenConfigurations.Signing.Credentials,
-                    Subject = identity
-                });
-                _logger.LogInformation(1, "User logged in.");
-                return Response(new TokenViewModel(model.Email, jwtSecurity.WriteToken(token), token.ValidTo));
+
+                    var principal = await _signInManager.CreateUserPrincipalAsync(user);
+                    ClaimsIdentity identity = principal.Identity as ClaimsIdentity;
+                    var jwtSecurity = new JwtSecurityTokenHandler();
+                    var token = jwtSecurity.CreateToken(new SecurityTokenDescriptor
+                    {
+                        Issuer = _tokenConfigurations.Issuer,
+                        Audience = _tokenConfigurations.Audience,
+                        Expires = DateTime.UtcNow.AddMinutes(_tokenConfigurations.Seconds),
+                        SigningCredentials = _tokenConfigurations.Signing.Credentials,
+                        Subject = identity
+                    });
+                    _logger.LogInformation(1, "User logged in.");
+                    return Response(new TokenViewModel(model.Email, jwtSecurity.WriteToken(token), token.ValidTo));
+                }
+
+                NotifyError(result.ToString(), "Your email was not confirmed, One email of confirm was sent for you. Please, access your email for confirm.");
+                return Response(model);
+
             }
 
             if (result.IsLockedOut)
@@ -99,12 +110,12 @@ namespace ApprovalCenter.Services.Api.Controllers
 
             if (result.Succeeded)
             {
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                
+
                 // User claim for write customers data
                 await _userManager.AddClaimAsync(user, new Claim("Approval", "Read"));
                 await _userManager.AddClaimAsync(user, new Claim("Approval", "Write"));
 
+                await SendConfirmEmail(user);
                 await _signInManager.SignInAsync(user, false);
                 _logger.LogInformation(3, "User created a new account with password.");
                 return Response(model);
@@ -112,6 +123,63 @@ namespace ApprovalCenter.Services.Api.Controllers
 
             AddIdentityErrors(result);
             return Response(model);
+        }
+
+        private async Task SendConfirmEmail(ApplicationUser user)
+        {
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            var callbackUrl = Url.Action("ConfirmEmail", "account",
+               new { userId = user.Id, code = code },
+               protocol: Request.Scheme);
+
+            await _emailSender.SendEmailConfirmationAsync(user.Email, callbackUrl);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("account/confirm-email")]
+        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            var result = await _userManager.ConfirmEmailAsync(user, code);
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            return NotFound();
+            //return Redirect("https://flippingbook.com/404");
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("account/forgot-password")]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                NotifyModelStateErrors();
+                return Response(model);
+            }
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+
+            if (!user.EmailConfirmed)
+            {
+                await SendConfirmEmail(user);
+            }
+            else
+            {
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                var callbackUrl = Url.Action("ResetPassword", "Account",
+                 new { UserId = user.Id, code = code }, protocol: Request.Scheme);
+                await _emailSender.SendEmailForgotPasswordAsync(user.Email, callbackUrl);
+            }
+            return Response(model);
+
         }
     }
 }

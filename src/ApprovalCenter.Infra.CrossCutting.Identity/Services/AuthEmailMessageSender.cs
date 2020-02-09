@@ -18,13 +18,13 @@ namespace ApprovalCenter.Infra.CrossCutting.Identity.Services
         public Task SendEmailAsync(string email, string subject, string message)
         {
             // Plug in your email service here to send an email.
-            return Execute(subject, message,email);
+            return Execute(subject, message, email);
         }
         public Task Execute(string subject, string message, string email)
         {
             var msg = new MailMessage()
             {
-                From = new MailAddress("Joe@contoso.com", Options.UserCredential),
+                From = new MailAddress(Options.UserCredential, Options.UserCredential),
                 Subject = subject
             };
             msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(message, null, MediaTypeNames.Text.Plain));
