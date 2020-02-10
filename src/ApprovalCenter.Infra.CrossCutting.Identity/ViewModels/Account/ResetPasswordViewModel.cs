@@ -5,13 +5,10 @@ using System.Text;
 
 namespace ApprovalCenter.Infra.CrossCutting.Identity.ViewModels.Account
 {
-    public class ForgotPasswordViewModel
+    public class ResetPasswordViewModel : RegisterViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-
-
+        [Display(Name = "Token Password")]
+        public string TokenPassword { get; set; }
     }
 }

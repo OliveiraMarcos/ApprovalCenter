@@ -130,7 +130,7 @@ namespace ApprovalCenter.Services.Api.Controllers
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
             var callbackUrl = Url.Action("ConfirmEmail", "account",
-               new { userId = user.Id, code = code },
+               new { userId = user.Id, code = code, callbackUrlSuccess = callbackUrlSuccess },
                protocol: Request.Scheme);
 
             await _emailSender.SendEmailConfirmationAsync(user.Email, callbackUrl);
@@ -139,7 +139,7 @@ namespace ApprovalCenter.Services.Api.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("account/confirm-email")]
-        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        public async Task<IActionResult> ConfirmEmail(string userId, string code, string callbackUrl)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
@@ -149,7 +149,6 @@ namespace ApprovalCenter.Services.Api.Controllers
                 return Ok();
             }
             return NotFound();
-            //return Redirect("https://flippingbook.com/404");
         }
 
         [HttpPost]
@@ -175,11 +174,32 @@ namespace ApprovalCenter.Services.Api.Controllers
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
 
                 var callbackUrl = Url.Action("ResetPassword", "Account",
-                 new { UserId = user.Id, code = code }, protocol: Request.Scheme);
+                 new { email = user.Email, code = code}, protocol: Request.Scheme);
                 await _emailSender.SendEmailForgotPasswordAsync(user.Email, callbackUrl);
             }
             return Response(model);
 
+        }
+
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                NotifyModelStateErrors();
+                return Response(model);
+            }
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            var result = await _userManager.ResetPasswordAsync(user, model.TokenPassword, model.Password);
+            if (result.Succeeded)
+            {
+
+                return Response(model);
+            }
+
+            AddIdentityErrors(result);
+            return Response(model);
         }
     }
 }
