@@ -130,7 +130,7 @@ namespace ApprovalCenter.Services.Api.Controllers
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
             var callbackUrl = Url.Action("ConfirmEmail", "account",
-               new { userId = user.Id, code = code, callbackUrlSuccess = callbackUrlSuccess },
+               new { userId = user.Id, code = code },
                protocol: Request.Scheme);
 
             await _emailSender.SendEmailConfirmationAsync(user.Email, callbackUrl);
@@ -173,14 +173,17 @@ namespace ApprovalCenter.Services.Api.Controllers
             {
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-                var callbackUrl = Url.Action("ResetPassword", "Account",
-                 new { email = user.Email, code = code}, protocol: Request.Scheme);
-                await _emailSender.SendEmailForgotPasswordAsync(user.Email, callbackUrl);
+                //var callbackUrl = Url.Action("ResetPassword", "Account",
+                // new { email = user.Email, code = code}, protocol: Request.Scheme);
+                await _emailSender.SendEmailForgotPasswordAsync(user.Email, code);
             }
             return Response(model);
 
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("account/reset-password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)

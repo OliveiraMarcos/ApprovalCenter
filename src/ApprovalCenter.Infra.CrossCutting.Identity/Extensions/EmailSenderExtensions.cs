@@ -14,8 +14,9 @@ namespace ApprovalCenter.Infra.CrossCutting.Identity.Extensions
 
         public static Task SendEmailForgotPasswordAsync(this IEmailSender emailSender, string email, string link)
         {
+            //$"Please reset your password by clicking this link: <a href='{HtmlEncoder.Default.Encode(link)}'>link</a>"
             return emailSender.SendEmailAsync(email, "Reset Password",
-                $"Please reset your password by clicking this link: <a href='{HtmlEncoder.Default.Encode(link)}'>link</a>");
+                $"Please use this code of security for reset your password: {link}");
         }
     }
 }
