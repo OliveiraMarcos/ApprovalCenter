@@ -16,6 +16,7 @@ using System.IdentityModel.Tokens.Jwt;
 using ApprovalCenter.Infra.CrossCutting.Identity.Authorization.Jwt;
 using Microsoft.Extensions.Options;
 using ApprovalCenter.Infra.CrossCutting.Identity.Extensions;
+using ApprovalCenter.Domain.General.Interfaces;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
@@ -34,7 +35,8 @@ namespace ApprovalCenter.Services.Api.Controllers
             ILoggerFactory loggerFactory,
             IOptions<TokenConfigurations> options,
             IEmailSender emailSender,
-            IMediatorHandler mediator) : base(notifications, mediator)
+            IUser user,
+            IMediatorHandler mediator) : base(notifications, mediator, user)
         {
             _userManager = userManager;
             _signInManager = signInManager;

@@ -3,6 +3,7 @@ using ApprovalCenter.Application.DataTranferObject;
 using ApprovalCenter.Application.Interfaces.Services;
 using ApprovalCenter.Domain.Core.Interfaces.Bus;
 using ApprovalCenter.Domain.Core.Notifications;
+using ApprovalCenter.Domain.General.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,8 +16,9 @@ namespace ApprovalCenter.Services.Api.Controllers
     {
         private readonly IApprovalAppService _approvalAppService;
         public ApprovalController(IApprovalAppService approvalAppService,
-                                     INotificationHandler<DomainNotification> notifications, 
-                                     IMediatorHandler mediator) : base(notifications, mediator)
+                                     INotificationHandler<DomainNotification> notifications,
+                                     IUser user,
+                                     IMediatorHandler mediator) : base(notifications, mediator, user)
         {
             _approvalAppService = approvalAppService;
         }

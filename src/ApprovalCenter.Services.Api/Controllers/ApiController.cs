@@ -6,6 +6,7 @@ using System.Linq;
 using ApprovalCenter.Domain.Core.Interfaces.Bus;
 using ApprovalCenter.Domain.Core.Notifications;
 using Microsoft.AspNetCore.Authorization;
+using ApprovalCenter.Domain.General.Interfaces;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
@@ -14,12 +15,14 @@ namespace ApprovalCenter.Services.Api.Controllers
     {
         private readonly DomainNotificationHandler _notifications;
         private readonly IMediatorHandler _mediator;
-
+        public readonly IUser AppUser;
         protected ApiController(INotificationHandler<DomainNotification> notifications,
-                                IMediatorHandler mediator)
+                                IMediatorHandler mediator, 
+                                IUser appUser)
         {
             _notifications = (DomainNotificationHandler)notifications;
             _mediator = mediator;
+            AppUser = appUser;
         }
 
         protected IEnumerable<DomainNotification> Notifications => _notifications.GetNotifications();

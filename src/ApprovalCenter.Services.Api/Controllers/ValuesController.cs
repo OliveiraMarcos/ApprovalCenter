@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ApprovalCenter.Domain.Core.Interfaces.Bus;
 using ApprovalCenter.Domain.Core.Notifications;
+using ApprovalCenter.Domain.General.Interfaces;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
@@ -11,7 +12,8 @@ namespace ApprovalCenter.Services.Api.Controllers
     public class ValuesController : ApiController
     {
         public ValuesController(INotificationHandler<DomainNotification> notifications,
-            IMediatorHandler mediator) : base(notifications, mediator)
+            IUser user,
+            IMediatorHandler mediator) : base(notifications, mediator,user)
         {
 
         }
