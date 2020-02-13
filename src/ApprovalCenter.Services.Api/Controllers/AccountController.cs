@@ -67,6 +67,9 @@ namespace ApprovalCenter.Services.Api.Controllers
 
                     var principal = await _signInManager.CreateUserPrincipalAsync(user);
                     ClaimsIdentity identity = principal.Identity as ClaimsIdentity;
+
+                    identity.AddClaim(new Claim(JwtRegisteredClaimNames.Email, user.Email));
+
                     var jwtSecurity = new JwtSecurityTokenHandler();
                     var token = jwtSecurity.CreateToken(new SecurityTokenDescriptor
                     {

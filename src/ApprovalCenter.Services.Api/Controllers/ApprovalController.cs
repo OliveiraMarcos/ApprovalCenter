@@ -28,7 +28,6 @@ namespace ApprovalCenter.Services.Api.Controllers
         // GET api/approval
         [HttpGet]
         [Authorize(Policy = "CanReadApprovalData")]
-        //[AllowAnonymous]
         public IActionResult Get()
         {
             if (AppUser.IsInRole("Integration"))
