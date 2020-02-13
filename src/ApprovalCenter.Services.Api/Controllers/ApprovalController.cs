@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ApprovalCenter.Application.DataTranferObject;
 using ApprovalCenter.Application.Interfaces.Services;
 using ApprovalCenter.Domain.Core.Interfaces.Bus;
@@ -30,7 +31,14 @@ namespace ApprovalCenter.Services.Api.Controllers
         //[AllowAnonymous]
         public IActionResult Get()
         {
-            return Response(_approvalAppService.GetAll());
+            if (AppUser.IsInRole("Integration"))
+            {
+                return Response(_approvalAppService.GetAll());
+            }
+            else
+            {
+                return Response(_approvalAppService.GetAll().Where(e => e.EmailApproval == AppUser.GetUserEmail()));
+            }
         }
 
         // GET api/approval/5

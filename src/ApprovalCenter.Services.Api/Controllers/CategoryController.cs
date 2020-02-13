@@ -25,7 +25,6 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // GET api/category
         [HttpGet]
-        //[AllowAnonymous]
         [Authorize(Policy = "CanReadCategoryData")]
         public IActionResult Get()
         {
