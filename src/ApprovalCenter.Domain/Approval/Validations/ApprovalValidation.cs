@@ -36,7 +36,7 @@ namespace ApprovalCenter.Domain.Approval.Validations
         protected void ValidateEmailApproval(string email)
         {
             RuleFor(c => c.EmailApproval)
-                .NotEqual(email).WithMessage("Do you not permission for run this operation!");
+                .Equal(email).WithMessage("Do you not permission for run this operation!");
         }
     }
 }
