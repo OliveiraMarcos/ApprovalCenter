@@ -11,5 +11,15 @@ namespace ApprovalCenter.Domain.Approval.Validations
             ValidateSubject();
             ValidateDescription();
         }
+
+        public class Factory
+        {
+            public static UpdateApprovalCommandValidation New(string email)
+            {
+                var instance = new UpdateApprovalCommandValidation();
+                instance.ValidateEmailApproval(email);
+                return instance;
+            }
+        }
     }
 }

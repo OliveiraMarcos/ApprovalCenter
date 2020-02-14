@@ -1,4 +1,5 @@
 ﻿using ApprovalCenter.Domain.Approval.Validations;
+using ApprovalCenter.Domain.General.Interfaces;
 using System;
 
 namespace ApprovalCenter.Domain.Approval.Commands
@@ -31,6 +32,21 @@ namespace ApprovalCenter.Domain.Approval.Commands
         {
             ValidationResult = new UpdateApprovalCommandValidation().Validate(this);
             return ValidationResult.IsValid;
+        }
+
+        public bool IsValid(IUser user)
+        {
+            if (user.IsInRole("Integration"))
+            {
+                return IsValid();
+            }
+            else
+            {
+                ValidationResult = UpdateApprovalCommandValidation.Factory.New(user.GetUserEmail()).Validate(this);
+                return ValidationResult.IsValid;
+            }
+
+
         }
     }
 }

@@ -20,18 +20,21 @@ namespace ApprovalCenter.Domain.Approval.CommandHandlers
     {
         private readonly IMediatorHandler Bus;
         private readonly IApprovalRepository _approvalRepository;
+        private readonly IUser _user;
         public ApprovalCommandHandler(IApprovalRepository approvalRepository,
                                       IUnitOfWork uow, 
-                                      IMediatorHandler bus, 
+                                      IMediatorHandler bus,
+                                      IUser user,
                                       INotificationHandler<DomainNotification> notifications) : base(uow, bus, notifications)
         {
             _approvalRepository = approvalRepository;
+            _user = user;
             Bus = bus;
         }
 
         public Task<bool> Handle(InsertNewApprovalCommand request, CancellationToken cancellationToken)
         {
-            if (!request.IsValid())
+            if (!request.IsValid(_user))
             {
                 NotifyValidationErrors(request);
                 return Task.FromResult(false);
@@ -60,7 +63,7 @@ namespace ApprovalCenter.Domain.Approval.CommandHandlers
 
         public Task<bool> Handle(UpdateApprovalCommand request, CancellationToken cancellationToken)
         {
-            if (!request.IsValid())
+            if (!request.IsValid(_user))
             {
                 NotifyValidationErrors(request);
                 return Task.FromResult(false);

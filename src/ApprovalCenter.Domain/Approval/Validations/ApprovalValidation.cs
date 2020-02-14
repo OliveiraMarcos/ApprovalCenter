@@ -32,5 +32,11 @@ namespace ApprovalCenter.Domain.Approval.Validations
                 .NotEmpty().WithMessage("Please ensure you have entered the Description")
                 .Length(2, 250).WithMessage("The EmailApproval must have between 2 and 250 EmailApproval");
         }
+
+        protected void ValidateEmailApproval(string email)
+        {
+            RuleFor(c => c.EmailApproval)
+                .NotEqual(email).WithMessage("Do you not permission for run this operation!");
+        }
     }
 }
