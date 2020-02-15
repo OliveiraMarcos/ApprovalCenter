@@ -51,7 +51,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // POST api/approval
         [HttpPost]
-        [Authorize(Policy = "CanWriteApprovalData")]
+        [Authorize(Policy = "CanWriteApprovalData", Roles = "Integration")]
         public IActionResult Post([FromBody] ApprovalDTO approvalDTO)
         {
             if (!ModelState.IsValid)

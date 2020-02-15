@@ -22,19 +22,5 @@ namespace ApprovalCenter.Domain.Approval.Commands
             return ValidationResult.IsValid;
         }
 
-        public bool IsValid(IUser user)
-        {
-            if (user.IsInRole("Integration"))
-            {
-                return IsValid();
-            }
-            else
-            {
-                ValidationResult = InsertNewApprovalCommandValidation.Factory.New(user.GetUserEmail()).Validate(this);
-                return ValidationResult.IsValid;
-            }
-            
-
-        }
     }
 }

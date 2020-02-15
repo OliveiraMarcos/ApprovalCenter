@@ -11,18 +11,7 @@ namespace ApprovalCenter.Domain.Approval.Validations
             ValidateSubject();
             ValidateDescription();
         }
-        public class Factory
-        {
-            public static InsertNewApprovalCommandValidation New(string email)
-            {
-                var instance = new InsertNewApprovalCommandValidation() { 
-                        
-                };
-                instance.ValidateEmailApproval(email);
-                return instance;
-            }
-        }
-
+        
     }
     
 }

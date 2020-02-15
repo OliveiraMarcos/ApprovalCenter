@@ -34,7 +34,7 @@ namespace ApprovalCenter.Domain.Approval.CommandHandlers
 
         public Task<bool> Handle(InsertNewApprovalCommand request, CancellationToken cancellationToken)
         {
-            if (!request.IsValid(_user))
+            if (!request.IsValid())
             {
                 NotifyValidationErrors(request);
                 return Task.FromResult(false);
