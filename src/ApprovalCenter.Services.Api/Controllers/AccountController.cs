@@ -101,7 +101,7 @@ namespace ApprovalCenter.Services.Api.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("account/register")]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -109,7 +109,7 @@ namespace ApprovalCenter.Services.Api.Controllers
                 return Response(model);
             }
 
-            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -159,7 +159,7 @@ namespace ApprovalCenter.Services.Api.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("account/forgot-password")]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -177,10 +177,10 @@ namespace ApprovalCenter.Services.Api.Controllers
             else
             {
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-
+                var urlRedirect = $"http://localhost:4200/reseter/{user.Email}/{code}";
                 //var callbackUrl = Url.Action("ResetPassword", "Account",
                 // new { email = user.Email, code = code}, protocol: Request.Scheme);
-                await _emailSender.SendEmailForgotPasswordAsync(user.Email, code);
+                await _emailSender.SendEmailForgotPasswordAsync(user.Email, urlRedirect);
             }
             return Response(model);
 
@@ -189,7 +189,7 @@ namespace ApprovalCenter.Services.Api.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("account/reset-password")]
-        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
