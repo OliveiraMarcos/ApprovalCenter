@@ -17,6 +17,7 @@ using ApprovalCenter.Infra.CrossCutting.Identity.Authorization.Jwt;
 using Microsoft.Extensions.Options;
 using ApprovalCenter.Infra.CrossCutting.Identity.Extensions;
 using ApprovalCenter.Domain.General.Interfaces;
+using System.Web;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
@@ -177,7 +178,7 @@ namespace ApprovalCenter.Services.Api.Controllers
             else
             {
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var urlRedirect = $"http://localhost:4200/reseter/{user.Email}/{code}";
+                var urlRedirect = $"http://localhost:4200/reseter/{user.Email}/{HttpUtility.UrlEncode(code)}";
                 //var callbackUrl = Url.Action("ResetPassword", "Account",
                 // new { email = user.Email, code = code}, protocol: Request.Scheme);
                 await _emailSender.SendEmailForgotPasswordAsync(user.Email, urlRedirect);

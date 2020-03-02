@@ -12,6 +12,5 @@ namespace ApprovalCenter.Infra.CrossCutting.Identity.ViewModels.Account
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-
     }
 }

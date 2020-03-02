@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ApprovalCenter.Infra.CrossCutting.Identity.ViewModels.Account
 {
-    public class ResetPasswordViewModel : RegisterViewModel
+    public class ResetPasswordViewModel : PasswordViewModel
     {
         [Required]
         [Display(Name = "Token Password")]
