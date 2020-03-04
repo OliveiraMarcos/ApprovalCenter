@@ -81,7 +81,7 @@ namespace ApprovalCenter.Services.Api.Controllers
                         Subject = identity
                     });
                     _logger.LogInformation(1, "User logged in.");
-                    return Response(new TokenViewModel(model.Email, jwtSecurity.WriteToken(token), token.ValidTo));
+                    return Response(new TokenViewModel(user.UserName, user.Email, jwtSecurity.WriteToken(token), token.ValidTo));
                 }
 
                 NotifyError(result.ToString(), "Your email was not confirmed, One email of confirm was sent for you. Please, access your email for confirm.");
