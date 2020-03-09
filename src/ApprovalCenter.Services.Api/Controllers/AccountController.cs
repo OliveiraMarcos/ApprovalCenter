@@ -152,7 +152,8 @@ namespace ApprovalCenter.Services.Api.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
             {
-                return Ok();
+                //return Ok();
+                return Redirect("http://localhost:4200");
             }
             return NotFound();
         }
