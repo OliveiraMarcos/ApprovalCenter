@@ -24,8 +24,8 @@ namespace ApprovalCenter.Application.DataTranferObject
         [DisplayName("Justification")]
         public string Justification { get;  set; }
 
-        //[DisplayName("Description")]
-        //public CategoryDTO Category { get;  set; }
+        [DisplayName("Category")]
+        public CategoryDTO Category { get; set; }
 
         [Required(ErrorMessage = "The Category Id is Required")]
         [DisplayName("Category Id")]
