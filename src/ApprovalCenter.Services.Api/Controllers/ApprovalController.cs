@@ -36,7 +36,7 @@ namespace ApprovalCenter.Services.Api.Controllers
             }
             else
             {
-                return Response(_approvalAppService.GetAll().Where(e => e.EmailApproval == AppUser.GetUserEmail()));
+                return Response(_approvalAppService.GetAll().Where(e => e.EmailApproval == AppUser.GetUserEmail() && e.IsApproval == null));
             }
         }
 
