@@ -58,11 +58,10 @@ namespace ApprovalCenter.Services.Api.Controllers
                 return Response(model);
             }
 
-
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, true);
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, true);
             if (result.Succeeded)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user.EmailConfirmed)
                 {
 
@@ -153,7 +152,7 @@ namespace ApprovalCenter.Services.Api.Controllers
             if (result.Succeeded)
             {
                 //return Ok();
-                return Redirect("http://localhost:4200");
+                return Redirect("http://192.168.14.135:8080");
             }
             return NotFound();
         }
@@ -179,7 +178,7 @@ namespace ApprovalCenter.Services.Api.Controllers
             else
             {
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var urlRedirect = $"http://localhost:4200/reseter/{user.Email}/{HttpUtility.UrlEncode(code)}";
+                var urlRedirect = $"http://192.168.14.135:8080/reseter/{user.Email}/{HttpUtility.UrlEncode(code)}";
                 //var callbackUrl = Url.Action("ResetPassword", "Account",
                 // new { email = user.Email, code = code}, protocol: Request.Scheme);
                 await _emailSender.SendEmailForgotPasswordAsync(user.Email, urlRedirect);
