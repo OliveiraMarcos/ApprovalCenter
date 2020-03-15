@@ -13,6 +13,10 @@ namespace ApprovalCenter.Domain.Category.Entities
             this.DateCreate = dateCreate;
             this.DateEdit = dateEdit;
         }
+        protected CategoryEntity()
+        {
+
+        }
         public string Name { get; protected set; }
         public string Description { get; protected set; }
         public DateTime DateCreate { get; protected set; }

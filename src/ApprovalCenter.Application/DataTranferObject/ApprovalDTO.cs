@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace ApprovalCenter.Application.DataTranferObject
 {
@@ -12,40 +10,40 @@ namespace ApprovalCenter.Application.DataTranferObject
         [MinLength(2)]
         [MaxLength(100)]
         [DisplayName("Subject")]
-        public string Subject { get; protected set; }
+        public string Subject { get;  set; }
 
         [Required(ErrorMessage = "The Description is Required")]
         [MinLength(2)]
         [MaxLength(500)]
         [DisplayName("Description")]
-        public string Description { get; protected set; }
+        public string Description { get;  set; }
 
         [DisplayName("Is Approval")]
-        public bool? IsApproval { get; protected set; }
+        public bool? IsApproval { get;  set; }
 
         [DisplayName("Justification")]
-        public string Justification { get; protected set; }
+        public string Justification { get;  set; }
 
-        //[DisplayName("Description")]
-        //public CategoryDTO Category { get; protected set; }
+        [DisplayName("Category")]
+        public CategoryDTO Category { get; set; }
 
         [Required(ErrorMessage = "The Category Id is Required")]
         [DisplayName("Category Id")]
-        public Guid CategoryId { get; protected set; }
+        public Guid CategoryId { get;  set; }
 
         [Required(ErrorMessage = "The Email Approval is Required")]
         [MinLength(2)]
         [MaxLength(250)]
         [DisplayName("Email Approval")]
-        public string EmailApproval { get; protected set; }
+        public string EmailApproval { get;  set; }
 
         [DisplayName("Date Create")]
-        public DateTime DateCreate { get; protected set; }
+        public DateTime DateCreate { get;  set; }
 
         [DisplayName("Date Approval")]
-        public DateTime? DateApproval { get; protected set; }
+        public DateTime? DateApproval { get;  set; }
 
         [DisplayName("Date Read")]
-        public DateTime? DateRead { get; protected set; }
+        public DateTime? DateRead { get;  set; }
     }
 }

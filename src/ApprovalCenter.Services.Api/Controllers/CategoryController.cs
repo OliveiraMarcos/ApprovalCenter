@@ -1,39 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ApprovalCenter.Application.DataTranferObject;
 using ApprovalCenter.Application.Interfaces.Services;
 using ApprovalCenter.Domain.Core.Interfaces.Bus;
 using ApprovalCenter.Domain.Core.Notifications;
+using ApprovalCenter.Domain.General.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
+
+    [Route("api/[controller]")]
     public class CategoryController : ApiController
     {
         private readonly ICategoryAppService _categoryAppService;
-        protected CategoryController(ICategoryAppService categoryAppService, 
+        public CategoryController(ICategoryAppService categoryAppService, 
                                      INotificationHandler<DomainNotification> notifications, 
-                                     IMediatorHandler mediator) : base(notifications, mediator)
+                                     IUser user,
+                                     IMediatorHandler mediator) : base(notifications, mediator, user)
         {
             _categoryAppService = categoryAppService;
         }
 
-
         // GET api/category
-        [HttpGet("category")]
-        //[AllowAnonymous]
-        //[Route("category")]
+        [HttpGet]
+        [Authorize(Policy = "CanReadCategoryData")]
         public IActionResult Get()
         {
             return Response(_categoryAppService.GetAll());
         }
 
         // GET api/category/5
-        [HttpGet("category/{id:guid}")]
-        //[Route("category/{id:guid}")]
+        [HttpGet("{id:guid}")]
+        [Authorize(Policy = "CanReadCategoryData")]
         public IActionResult Get(Guid id)
         {
             var categoryViewModel = _categoryAppService.GetById(id);
@@ -41,8 +41,8 @@ namespace ApprovalCenter.Services.Api.Controllers
         }
 
         // POST api/category
-        [HttpPost("category")]
-        //[Route("category")]
+        [HttpPost]
+        [Authorize(Policy = "CanWriteCategoryData")]
         public IActionResult Post([FromBody] CategoryDTO categoryDTO)
         {
             if (!ModelState.IsValid)
@@ -55,8 +55,8 @@ namespace ApprovalCenter.Services.Api.Controllers
         }
 
         // PUT api/category/5
-        //[HttpPut("category")]
-        [Route("category")]
+        [HttpPut]
+        [Authorize(Policy = "CanWriteCategoryData")]
         public IActionResult Put([FromBody] CategoryDTO categoryDTO)
         {
             if (!ModelState.IsValid)
@@ -69,8 +69,8 @@ namespace ApprovalCenter.Services.Api.Controllers
         }
 
         // DELETE api/category/5
-        [HttpDelete("category")]
-        //[Route("category")]
+        [HttpDelete("{id:guid}")]
+        [Authorize(Policy = "CanRemoveCategoryData")]
         public IActionResult Delete(Guid id)
         {
             _categoryAppService.Delete(id);

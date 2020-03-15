@@ -20,12 +20,15 @@ namespace ApprovalCenter.Domain.Approval.CommandHandlers
     {
         private readonly IMediatorHandler Bus;
         private readonly IApprovalRepository _approvalRepository;
+        private readonly IUser _user;
         public ApprovalCommandHandler(IApprovalRepository approvalRepository,
                                       IUnitOfWork uow, 
-                                      IMediatorHandler bus, 
+                                      IMediatorHandler bus,
+                                      IUser user,
                                       INotificationHandler<DomainNotification> notifications) : base(uow, bus, notifications)
         {
             _approvalRepository = approvalRepository;
+            _user = user;
             Bus = bus;
         }
 
@@ -41,7 +44,7 @@ namespace ApprovalCenter.Domain.Approval.CommandHandlers
                                               , request.Subject
                                               , request.Description
                                               , request.EmailApproval
-                                              , request.DateCreate);
+                                              , DateTime.Now);
 
             _approvalRepository.Add(approval);
 
@@ -60,12 +63,12 @@ namespace ApprovalCenter.Domain.Approval.CommandHandlers
 
         public Task<bool> Handle(UpdateApprovalCommand request, CancellationToken cancellationToken)
         {
-            if (!request.IsValid())
+            if (!request.IsValid(_user))
             {
                 NotifyValidationErrors(request);
                 return Task.FromResult(false);
             }
-            var approval = new ApprovalEntity(Guid.NewGuid()
+            var approval = new ApprovalEntity(request.Id
                                               , request.CategoryId
                                               , request.Subject
                                               , request.Description

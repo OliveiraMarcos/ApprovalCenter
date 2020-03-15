@@ -8,14 +8,12 @@ namespace ApprovalCenter.Domain.Category.Commands
         public UpdateCategoryCommand(Guid id,
             string name,
             string description,
-            DateTime dateCreate,
-            DateTime dateEdit)
+            DateTime dateCreate)
         {
             this.Id = id;
             this.Name = name;
             this.Description = description;
             this.DateCreate = dateCreate;
-            this.DateEdit = dateEdit;
         }
         public override bool IsValid()
         {

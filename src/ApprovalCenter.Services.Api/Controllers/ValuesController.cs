@@ -4,29 +4,31 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ApprovalCenter.Domain.Core.Interfaces.Bus;
 using ApprovalCenter.Domain.Core.Notifications;
+using ApprovalCenter.Domain.General.Interfaces;
 
 namespace ApprovalCenter.Services.Api.Controllers
 {
-    [Authorize]
+    [Route("api/[controller]")]
     public class ValuesController : ApiController
     {
         public ValuesController(INotificationHandler<DomainNotification> notifications,
-            IMediatorHandler mediator) : base(notifications, mediator)
+            IUser user,
+            IMediatorHandler mediator) : base(notifications, mediator,user)
         {
 
         }
 
         // GET api/values
         [HttpGet]
-        [Route("values")]
+        [Authorize(Policy = "CanReadValuesData")]
         public IActionResult Get()
         {
             return Response(new string[] { "value1", "value2" });
         }
 
         // GET api/values/5
-        [HttpGet]
-        [Route("values/{id:guid}")]
+        [HttpGet("{id:guid}")]
+        [Authorize(Policy = "CanReadValuesData")]
         public IActionResult Get(Guid id)
         {
             return Response("value");
@@ -34,7 +36,7 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // POST api/values
         [HttpPost]
-        [Route("values")]
+        [Authorize(Policy ="CanWriteValuesData")]
         public IActionResult Post([FromBody] string value)
         {
             return Response();
@@ -42,23 +44,23 @@ namespace ApprovalCenter.Services.Api.Controllers
 
         // PUT api/values/5
         [HttpPut]
-        [Route("values")]
+        [Authorize(Policy = "CanWriteValuesData")]
         public IActionResult Put([FromBody] string value)
         {
             return Response();
         }
 
         // DELETE api/values/5
-        [HttpDelete]
-        [Route("values")]
+        [HttpDelete("{id:guid}")]
+        [Authorize(Policy = "CanRemoveValuesData")]
         public IActionResult Delete(Guid id)
         {
             return Response();
         }
 
         // GET api/values/history/5
-        [HttpGet]
-        [Route("values/history/{id:guid}")]
+        [HttpGet("/history/{id:guid}")]
+        [Authorize(Policy = "CanReadValuesData")]
         public IActionResult History(Guid id)
         {
             return Response();

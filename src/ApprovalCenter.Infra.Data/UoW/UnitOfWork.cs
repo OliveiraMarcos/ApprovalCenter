@@ -1,18 +1,26 @@
 ﻿using System;
 using ApprovalCenter.Domain.General.Interfaces;
+using ApprovalCenter.Infra.Data.Context;
 
 namespace ApprovalCenter.Infra.Data.UoW
 {
     public class UnitOfWork : IUnitOfWork
     {
+        private readonly ApprovalCenterContext _context;
+
+        public UnitOfWork(ApprovalCenterContext context)
+        {
+            _context = context;
+        }
+
         public bool Commit()
         {
-            throw new NotImplementedException();
+            return _context.SaveChanges() > 0;
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _context.Dispose();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ApprovalCenter.Domain.Approval.Commands;
+using ApprovalCenter.Domain.General.Interfaces;
 
 namespace ApprovalCenter.Domain.Approval.Validations
 {
@@ -6,10 +7,11 @@ namespace ApprovalCenter.Domain.Approval.Validations
     {
         public InsertNewApprovalCommandValidation()
         {
-            ValidateId();
             ValidateEmailApproval();
             ValidateSubject();
             ValidateDescription();
         }
+        
     }
+    
 }

@@ -4,12 +4,9 @@ using ApprovalCenter.Domain.Approval.Commands;
 using ApprovalCenter.Domain.Approval.Entities;
 using ApprovalCenter.Domain.Approval.Interfaces.Repository;
 using ApprovalCenter.Domain.Core.Interfaces.Bus;
-using ApprovalCenter.Domain.Core.Interfaces.Repository;
 using ApprovalCenter.Domain.Core.Interfaces.Repository.EventSourcing;
 using AutoMapper;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ApprovalCenter.Application.Services
 {

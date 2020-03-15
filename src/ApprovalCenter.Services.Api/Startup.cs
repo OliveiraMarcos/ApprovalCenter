@@ -1,21 +1,13 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿//using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using MediatR;
-using System;
-using ApprovalCenter.Infra.CrossCutting.Identity.Data;
-using ApprovalCenter.Infra.CrossCutting.Identity.Extensions;
-using ApprovalCenter.Infra.CrossCutting.Identity.Interfaces.Services;
-using ApprovalCenter.Infra.CrossCutting.Identity.Models;
-using ApprovalCenter.Infra.CrossCutting.Identity.Services;
-using ApprovalCenter.Infra.CrossCutting.IoC;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.Extensions.Hosting;
+using ApprovalCenter.Services.Api.Configurations;
+using Microsoft.AspNetCore.Http;
 
 namespace ApprovalCenter.Services.Api
 {
@@ -23,7 +15,7 @@ namespace ApprovalCenter.Services.Api
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -44,68 +36,47 @@ namespace ApprovalCenter.Services.Api
         public void ConfigureServices(IServiceCollection services)
         {
             
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddSingleton<IJwt, JwtConfigurationRecorver>();
+            // Setting DBContexts
+            services.AddDatabaseSetup(Configuration);
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            // ASP.NET Identity Settings & JWT
+            services.AddIdentitySetup(Configuration);
 
-            services.AddAuthentication(option => {
-                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options => {
-                var tokenConf = Configuration.GetTokenConfigurations("Jwt");
-                options.SaveToken = true;
-                options.RequireHttpsMetadata = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidateLifetime = true,
-                    ValidAudience = tokenConf.Audience,
-                    ValidIssuer = tokenConf.Issuer,
-                    IssuerSigningKey = tokenConf.Signing.Key,
-                    ClockSkew = TimeSpan.Zero
-                };
-            });
+            // Auto Mapper
+            services.AddAutoMapperSetup();
 
-            services.AddSwaggerGen(s =>
-            {
-                s.SwaggerDoc("v1", new Info
-                {
-                    Version = "v1",
-                    Title = "ApprovalCenter Project",
-                    Description = "ApprovalCenter API Swagger surface",
-                    Contact = new Contact { Name = "Marcos Oliveira", Email = "marcos.ads.ti@gmail.com", Url = "https://github.com/OliveiraMarcos" },
-                    License = new License { Name = "MIT", Url = "https://github.com/OliveiraMarcos/BaseFoundationProject/blob/master/LICENSE" }
-                });
-            });
+            // Authorization
+            services.AddAuthSetup(Configuration);
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            // WebAPI Config
+            services.AddControllers();
+
+            // Swagger Config
+            services.AddSwaggerSetup();
+
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             // Adding MediatR for Domain Events and Notifications
             services.AddMediatR(typeof(Startup));
 
+            // ASP.NET HttpContext dependency
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             // .NET Native DI Abstraction
-            RegisterServices(services);
+            services.AddDependencyInjectionSetup();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
             app.UseCors(c =>
             {
                 c.AllowAnyHeader();
@@ -113,21 +84,16 @@ namespace ApprovalCenter.Services.Api
                 c.AllowAnyOrigin();
             });
 
-            app.UseHttpsRedirection();
+            app.UseAuthorization();
             app.UseAuthentication();
-            app.UseMvc();
 
-            app.UseSwagger();
-            app.UseSwaggerUI(s =>
+            app.UseEndpoints(endpoints =>
             {
-                s.SwaggerEndpoint("/swagger/v1/swagger.json", "ApprovalCenter Project API v1.1");
+                endpoints.MapControllers();
             });
+
+            app.UseSwaggerSetup();
         }
 
-        private static void RegisterServices(IServiceCollection services)
-        {
-            // Adding dependencies from another layers (isolated from Presentation)
-            NativeInjectorBootStrapper.RegisterServices(services);
-        }
     }
 }

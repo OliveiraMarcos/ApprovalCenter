@@ -4,24 +4,26 @@ Center Approval project to developed of others applications with DDD, CQRS and E
 [![Lisence](https://img.shields.io/github/license/OliveiraMarcos/BaseFoundationProject)](LICENSE)
 
 ## How to use:
-- You will need the latest Visual Studio 2017 and the latest .NET Core SDK.
+- You will need the latest Visual Studio 2019 and the latest .NET Core SDK.
 - The latest SDK and tools can be downloaded from https://dot.net/core.
 
 Also you can run the Apprval Center Project in Visual Studio Code (Windows, Linux or MacOS).
 
 To know more about how to setup your enviroment visit the [Microsoft .NET Download Guide](https://www.microsoft.com/net/download)
 
+To access of Demo click [here](https://approvalcenter.azurewebsites.net/swagger/index.html)
+
 ## Technologies implemented:
 
-- ASP.NET Core 2.2 (with .NET Core 2.2)
- - ASP.NET WebApi Core
+- ASP.NET Core 3.1 (with .NET Core 3.1)
+ - ASP.NET WebApi Core with JWT Bearer Authentication
  - ASP.NET Identity Core
-- Entity Framework Core 2.2
+- Entity Framework Core 3.1
 - .NET Core Native DI
 - AutoMapper
 - FluentValidator
 - MediatR
-- Swagger UI
+- Swagger UI with JWT support
 
 ## Architecture:
 

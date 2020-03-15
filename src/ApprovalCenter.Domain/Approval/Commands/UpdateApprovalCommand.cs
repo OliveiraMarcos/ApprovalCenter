@@ -1,11 +1,13 @@
 ﻿using ApprovalCenter.Domain.Approval.Validations;
+using ApprovalCenter.Domain.General.Interfaces;
 using System;
 
 namespace ApprovalCenter.Domain.Approval.Commands
 {
     public class UpdateApprovalCommand : ApprovalCommand
     {
-        public UpdateApprovalCommand(string subject
+        public UpdateApprovalCommand(Guid id
+                                        , string subject
                                         , string description
                                         , bool? isApproval
                                         , string justification
@@ -15,6 +17,7 @@ namespace ApprovalCenter.Domain.Approval.Commands
                                         , DateTime? dateApproval
                                         , DateTime? dateRead)
         {
+            this.Id = id;
             this.Subject = subject;
             this.Description = description;
             this.IsApproval = isApproval;
@@ -29,6 +32,21 @@ namespace ApprovalCenter.Domain.Approval.Commands
         {
             ValidationResult = new UpdateApprovalCommandValidation().Validate(this);
             return ValidationResult.IsValid;
+        }
+
+        public bool IsValid(IUser user)
+        {
+            if (user.IsInRole("Integration"))
+            {
+                return IsValid();
+            }
+            else
+            {
+                ValidationResult = UpdateApprovalCommandValidation.Factory.New(user.GetUserEmail()).Validate(this);
+                return ValidationResult.IsValid;
+            }
+
+
         }
     }
 }

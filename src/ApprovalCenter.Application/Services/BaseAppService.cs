@@ -7,7 +7,6 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ApprovalCenter.Application.Services
 {
