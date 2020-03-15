@@ -1,5 +1,5 @@
 # ApprovalCenter
-Center Approval project to developed of others applications with DDD, CQRS and Event Sourcing
+Single unified server application for approvals of several types, developed with multiples technologys how  DDD, CQRS and Event Sourcing
 
 [![Lisence](https://img.shields.io/github/license/OliveiraMarcos/BaseFoundationProject)](LICENSE)
 
