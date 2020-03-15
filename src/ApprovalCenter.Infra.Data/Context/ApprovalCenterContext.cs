@@ -16,9 +16,9 @@ namespace ApprovalCenter.Infra.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ApprovalContextConfiguration()); 
-            modelBuilder.ApplyConfiguration(new CategoryContextConfiguration());
-            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApprovalCenterContext).Assembly);
+            //modelBuilder.ApplyConfiguration(new ApprovalContextConfiguration()); 
+            //modelBuilder.ApplyConfiguration(new CategoryContextConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApprovalCenterContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
     }
