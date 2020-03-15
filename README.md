@@ -11,6 +11,8 @@ Also you can run the Apprval Center Project in Visual Studio Code (Windows, Linu
 
 To know more about how to setup your enviroment visit the [Microsoft .NET Download Guide](https://www.microsoft.com/net/download)
 
+To access of Demo click [here](https://approvalcenter.azurewebsites.net/swagger/index.html)
+
 ## Technologies implemented:
 
 - ASP.NET Core 3.1 (with .NET Core 3.1)
