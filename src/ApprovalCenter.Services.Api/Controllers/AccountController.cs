@@ -178,7 +178,7 @@ namespace ApprovalCenter.Services.Api.Controllers
             else
             {
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var urlRedirect = $"https://oliveiramarcos.github.io/ApprovalCenterPWA/reseter/{user.Email}/{HttpUtility.UrlEncode(code)}";
+                var urlRedirect = $"https://oliveiramarcos.github.io/ApprovalCenterPWA/reset?email={user.Email}&token={HttpUtility.UrlEncode(code)}";
                 //var callbackUrl = Url.Action("ResetPassword", "Account",
                 // new { email = user.Email, code = code}, protocol: Request.Scheme);
                 await _emailSender.SendEmailForgotPasswordAsync(user.Email, urlRedirect);
