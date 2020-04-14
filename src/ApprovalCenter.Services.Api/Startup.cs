@@ -73,6 +73,11 @@ namespace ApprovalCenter.Services.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

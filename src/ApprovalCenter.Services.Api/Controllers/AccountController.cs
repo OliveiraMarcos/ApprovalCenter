@@ -152,7 +152,7 @@ namespace ApprovalCenter.Services.Api.Controllers
             if (result.Succeeded)
             {
                 //return Ok();
-                return Redirect("http://192.168.14.135:8080");
+                return Redirect("https://oliveiramarcos.github.io/ApprovalCenterPWA");
             }
             return NotFound();
         }
@@ -178,7 +178,7 @@ namespace ApprovalCenter.Services.Api.Controllers
             else
             {
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var urlRedirect = $"http://192.168.14.135:8080/reseter/{user.Email}/{HttpUtility.UrlEncode(code)}";
+                var urlRedirect = $"https://oliveiramarcos.github.io/ApprovalCenterPWA/reset?email={user.Email}&token={HttpUtility.UrlEncode(code)}";
                 //var callbackUrl = Url.Action("ResetPassword", "Account",
                 // new { email = user.Email, code = code}, protocol: Request.Scheme);
                 await _emailSender.SendEmailForgotPasswordAsync(user.Email, urlRedirect);
