@@ -7,6 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
+#COPY . .
 COPY ["src/ApprovalCenter.Services.Api/ApprovalCenter.Services.Api.csproj", "src/ApprovalCenter.Services.Api/"]
 COPY ["src/ApprovalCenter.Infra.CrossCutting.IoC/ApprovalCenter.Infra.CrossCutting.IoC.csproj", "src/ApprovalCenter.Infra.CrossCutting.IoC/"]
 COPY ["src/ApprovalCenter.Application/ApprovalCenter.Application.csproj", "src/ApprovalCenter.Application/"]
@@ -26,4 +27,6 @@ RUN dotnet publish "ApprovalCenter.Services.Api.csproj" -c Release -o /app/publi
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+ENV JWT_SECONDS=120
 ENTRYPOINT ["dotnet", "ApprovalCenter.Services.Api.dll"]

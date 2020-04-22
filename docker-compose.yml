@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  approvalcenter.services.api:
+    image: oliveiramarcos/approvalcenterapi
+    container_name: approvalcenterapi
+    ports:
+      - "1080:80"
+      - "1081:443"
+    build:
+      context: .
+      dockerfile: src/ApprovalCenter.Services.Api/Dockerfile
+    networks:
+      - approval-network
+
+networks:
+  approval-network:
+    driver: bridge
