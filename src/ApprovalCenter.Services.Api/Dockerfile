@@ -27,6 +27,7 @@ RUN dotnet publish "ApprovalCenter.Services.Api.csproj" -c Release -o /app/publi
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY cert-aspnetcore.pfx .
 
 ENV JWT_SECONDS=120
 ENTRYPOINT ["dotnet", "ApprovalCenter.Services.Api.dll"]
