@@ -28,7 +28,7 @@ namespace ApprovalCenter.Services.Api
             }
 
             builder.AddEnvironmentVariables();
-            Configuration = builder.Build();
+            Configuration = builder.BuildEnv();
         }
 
 
