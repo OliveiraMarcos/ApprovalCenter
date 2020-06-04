@@ -13,6 +13,8 @@ To know more about how to setup your enviroment visit the [Microsoft .NET Downlo
 
 To access of Demo click [here](https://approvalcenter.azurewebsites.net/swagger/index.html)
 
+The PWA front-end application can be found in repository [here](https://github.com/OliveiraMarcos/ApprovalCenterPWA)
+
 ## Technologies implemented:
 
 - ASP.NET Core 3.1 (with .NET Core 3.1)
